@@ -1,18 +1,25 @@
-function startClickers() {
-  delayClick('#randomBossPortal a', 10);
-  delayClick('#popup span button:contains("Summon Boss")', 1);
-  delayClick('#popup span button:contains("CONTINUE")', 1);
-}
+var globalBossTracker;
 
 function delayClick(selector, seconds) {
-  var waiting = setInterval(
+  var timer = setInterval(
     function() {
-      if ($(selector).length > 0) {
+      if($(selector).length > 0) {
         $(selector).get(0).click();
       }
     },
     seconds * 1000
-  )
+  );
+
+  return timer;
 }
 
-startClickers();
+delayClick('#popup span button:contains("Summon Boss")', 3);
+delayClick('#popup span button:contains("CONTINUE")', 3);
+delayClick('#randomBossPortal a', 10);
+delayClick('span[name="timeRemaining"]:contains("JOIN") a', 20);
+
+setInterval(function() {
+  if($('img[name="globalBossImg"]').is(':visible')) {
+    $('img[name="globalBossImg"]').get(0).click();
+  }
+}, 1000);
