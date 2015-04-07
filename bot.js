@@ -39,3 +39,13 @@ function botRaid(username) {
   $('input[name="raid_user"]').val(username);
   $('button:contains("Raid!")').get(0).click();
 }
+
+function buySlimes() {
+  var slimeTimer = setInterval(function() {
+    $('button[name="buymax-knight"]').get(0).click();
+    setTimeout(function() {
+      $('button:contains("Yes")').get(0).click();
+    }, 500);
+  }, 60000);
+  activeTimers.push(slimeTimer);
+}
