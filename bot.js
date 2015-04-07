@@ -34,8 +34,18 @@ function play() {
     }
   }, 10000);
 
+  var scientistTimer = setInterval(function() {
+    if($('span[name="scientists_price"]').text() == "1 BC") {
+      $('button[name="hiremax_scientists"]').get(0).click();
+      setTimeout(function() {
+        $('button:contains("Yes")').get(0).click();
+      }, 250);
+    }
+  }, 20000);
+
   activeTimers.push(globalBossTimer);
   activeTimers.push(activateTimer);
+  activeTimers.push(scientistTimer);
 }
 
 function pause() {
