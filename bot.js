@@ -33,3 +33,9 @@ function pause() {
     clearInterval(activeTimers[i]);
   }
 }
+
+function botRaid(username) {
+  $('button:contains("Raid")').get(0).click();
+  $('input[name="raid_user"]').val(username);
+  $('button:contains("Raid!")').get(0).click();
+}
