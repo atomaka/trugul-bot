@@ -1,4 +1,4 @@
-var globalBossTracker;
+var activeTimers = [];
 
 function delayClick(selector, seconds) {
   var timer = setInterval(
@@ -13,13 +13,23 @@ function delayClick(selector, seconds) {
   return timer;
 }
 
-delayClick('#popup span button:contains("Summon Boss")', 3);
-delayClick('#popup span button:contains("CONTINUE")', 3);
-delayClick('#randomBossPortal a', 20);
-delayClick('span[name="timeRemaining"]:contains("JOIN") a', 80);
+function play() {
+  activeTimers.push(delayClick('#popup span button:contains("Summon Boss")', 3));
+  activeTimers.push(delayClick('#popup span button:contains("CONTINUE")', 3));
+  activeTimers.push(delayClick('#randomBossPortal a', 20));
+  activeTimers.push(delayClick('span[name="timeRemaining"]:contains("JOIN") a', 80));
 
-setInterval(function() {
-  if($('img[name="globalBossImg"]').is(':visible')) {
-    $('img[name="globalBossImg"]').get(0).click();
+  var timer = setInterval(function() {
+    if($('img[name="globalBossImg"]').is(':visible')) {
+      $('img[name="globalBossImg"]').get(0).click();
+    }
+  }, 1000);
+
+  activeTimers.push(timer);
+}
+
+function pause() {
+  for(var i = 0; i < activeTimers.length; i++) {
+    clearInterval(activeTimers[i]);
   }
-}, 1000);
+}
