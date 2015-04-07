@@ -15,8 +15,8 @@ function delayClick(selector, seconds) {
 
 delayClick('#popup span button:contains("Summon Boss")', 3);
 delayClick('#popup span button:contains("CONTINUE")', 3);
-delayClick('#randomBossPortal a', 10);
-delayClick('span[name="timeRemaining"]:contains("JOIN") a', 20);
+delayClick('#randomBossPortal a', 20);
+delayClick('span[name="timeRemaining"]:contains("JOIN") a', 80);
 
 setInterval(function() {
   if($('img[name="globalBossImg"]').is(':visible')) {
