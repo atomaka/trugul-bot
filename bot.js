@@ -18,6 +18,8 @@ function play() {
   activeTimers.push(delayClick('#popup span button:contains("CONTINUE")', 3));
   activeTimers.push(delayClick('#randomBossPortal a', 20));
   activeTimers.push(delayClick('span[name="timeRemaining"]:contains("JOIN") a', 80));
+  activeTimers.push(delayClick('button:contains("Activate")', 20));
+  activeTimers.push(delayClick('button:contains("Activate Item")', 3));
 
   var timer = setInterval(function() {
     if($('img[name="globalBossImg"]').is(':visible')) {
