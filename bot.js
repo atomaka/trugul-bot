@@ -18,16 +18,24 @@ function play() {
   activeTimers.push(delayClick('#popup span button:contains("CONTINUE")', 3));
   activeTimers.push(delayClick('#randomBossPortal a', 20));
   activeTimers.push(delayClick('span[name="timeRemaining"]:contains("JOIN") a', 80));
-  activeTimers.push(delayClick('button:contains("Activate")', 20));
-  activeTimers.push(delayClick('button:contains("Activate Item")', 3));
 
-  var timer = setInterval(function() {
+  var globalBossTimer = setInterval(function() {
     if($('img[name="globalBossImg"]').is(':visible')) {
       $('img[name="globalBossImg"]').get(0).click();
     }
   }, 1000);
 
-  activeTimers.push(timer);
+  var activateTimer = setInterval(function() {
+    if($('button:contains("Activate")')) {
+      $('button:contains("Activate")').get(0).click();
+      setTimeout(function() {
+        $('button:contains("Activate Item")').get(0).click();
+      }, 250);
+    }
+  }, 10000);
+
+  activeTimers.push(globalBossTimer);
+  activeTimers.push(activateTimer);
 }
 
 function pause() {
@@ -47,7 +55,7 @@ function buySlimes() {
     $('button[name="buymax-knight"]').get(0).click();
     setTimeout(function() {
       $('button:contains("Yes")').get(0).click();
-    }, 500);
+    }, 250);
   }, 60000);
   activeTimers.push(slimeTimer);
 }
