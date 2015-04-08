@@ -23,7 +23,7 @@ function play() {
     if($('img[name="globalBossImg"]').is(':visible')) {
       $('img[name="globalBossImg"]').get(0).click();
     }
-  }, 1000);
+  }, 250);
 
   var activateTimer = setInterval(function() {
     if($('button:contains("Activate")')) {
