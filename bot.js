@@ -14,7 +14,7 @@ function mainLoop() {
     var botPopupTitle = $('#popup p[name="title"]').text();
     switch(botPopupTitle) {
       case 'Raid report':
-        var botMessage = botBuildRaidReport($('#popup div[name="content"]'));
+        var botMessage = botBuildRaidReport($('#popup div[name="content"]').text());
         console.log(botMessage);
         clickButton('CONTINUE');
         break;
@@ -47,53 +47,61 @@ function mainLoop() {
     }
   }
 
-  //then, check to see if we need to do anything
-
   //RANDOM BOSS
-  if(randomBossRefreshing() === true && botFightingRandomBoss === true) {
+  if(randomBossRefreshing() === true && botFightingRandomBoss === true && botTickActivity === false) {
     botFightingRandomBoss = false;
   } else if(randomBossRefreshing() === false && botFightingRandomBoss === false) {
     clickSelector('#randomBossPortal a');
     botFightingRandomBoss = true;
+    botTickActivity = true;
   }
 
   //GLOBAL BOSS
-  if(globalBossRefreshing() === true && botFightingGlobalBoss === true) {
+  if(globalBossRefreshing() === true && botFightingGlobalBoss === true && botTickActivity === false) {
     clearInterval(botGlobalBossTimer);
     botFightingGlobalBoss = false;
   } else if(globalBossRefreshing() === false && botFightingGlobalBoss === false) {
     clickSelector('span[name="timeRemaining"]:contains("JOIN") a');
     botGlobalBossTimer = setInterval(fightGlobalBoss, 250);
     botFightingGlobalBoss = true;
+    botTickActivity = true;
   }
 
   //ACTIVATE BUFFS
-  if(inactiveBuffs()) {
+  if(inactiveBuffs() && botTickActivity === false) {
     clickSelector('button:contains("Activate")');
+    botTickActivity = true;
   }
 
   //BUY SCIENTISTS
-  if(haveBossCoins() && haveCheapLabor() && botPurchasing === false) {
+  if(haveBossCoins() && haveCheapLabor() && botTickActivity === false) {
     botPurchasing = true;
     clickSelector('button[name="hiremax_scientists"]');
+    botTickActivity = true;
   }
 
   //BUY SLIMES
-  if(botBuySlimes === true && botPurchasing === false && haveTrillions(10)) {
+  if(botBuySlimes === true && haveTrillions(10) && botTickActivity === false) {
     botPurchasing = true;
     clickSelector('button[name="buymax-knight"]');
+    botTickActivity = true;
   }
 }
 
 botToggle();
 
 function botBuildRaidReport(message) {
-  var botRaidUser = /You.? were raided by (.*?).? /.exec(message)[1];
-  var botRaidSoldiers = /lost (.*?) soldiers/.exec(message)[1];
+  var botRaidUser;
+  if(/You.? were raided by (.*?).? /.exec(message)) {
+    botRaidUser = /You.? were raided by (.*?).? /.exec(message)[1];
+  } else {
+    botRaidUser = /You .*? the raid against (.*?)! /.exec(message)[1];
+  }
+  var botRaidSoldiers = /! .*? lost (.*?) soldiers/.exec(message)[1];
   var botRaidResult = (/won/.exec(message) !== null) ? 'won' : 'lost';
   var botRaidStolen = (/steal (.*?) from/.exec(message) !== null) ? /steal (.*?) from/.exec(message)[1] : '$0';
 
-  return "RAIDED (" + botRaidUser + "): " + botRaidResult + "; lost: " + botRaidSoldiers + " and " + botRaidStolen;
+  return "RAIDED (" + botRaidUser + "): " + botRaidResult + "; souldiers: -" + botRaidSoldiers + "; " + botRaidResult + " money: " + botRaidStolen;
 }
 
 function haveTrillions(trillions) {
