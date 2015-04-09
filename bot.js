@@ -1,10 +1,12 @@
 var botLoop;
 var botPaused = true;
 var botPurchasing = false;
+var botRaiding = false;
 var botFightingRandomBoss = false;
 var botFightingGlobalBoss = false;
 var botBuySlimes = false;
 var botTickActivity = false;
+var botRaidTarget = null;
 var botGlobalBossTimer;
 
 function mainLoop() {
@@ -33,12 +35,21 @@ function mainLoop() {
           clickButton('No');
         }
         break;
+      case 'Raid':
+        if(botRaiding) {
+          clickButton('Raid!');
+          botRaiding = false;
+        } else {
+          clickButton('Nevermind');
+        }
+        break;
       case 'WHOOPS!':
       case 'BATTLE REPORT':
       case 'Battle Report':
       case 'ACTIVITY PASSED!':
       case 'SCENARIO #1':
-      case 'Lobby Closed':
+      case 'Lobby closed':
+      case 'Wait':
         clickButton('CONTINUE');
         break;
       default:
@@ -80,6 +91,14 @@ function mainLoop() {
     botTickActivity = true;
   }
 
+  //RAID
+  if(raidRefreshing() === false && haveRaidTarget() === true && botTickActivity === false) {
+    clickSelector('button[name="raid_button"]');
+    botFillIn('input[name="raid_user"]', botRaidTarget);
+    botTickActivity = true;
+    botRaiding = true;
+  }
+
   //BUY SLIMES
   if(botBuySlimes === true && haveTrillions(10) && botTickActivity === false) {
     botPurchasing = true;
@@ -89,6 +108,26 @@ function mainLoop() {
 }
 
 botToggle();
+
+function botFillIn(selector, text) {
+  $(selector).val(text);
+}
+
+function raidRefreshing() {
+  if($('span[name="raidtime"]').text().trim() == "") {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function haveRaidTarget() {
+  if(botRaidTarget == null) {
+    return false;
+  } else {
+    return true;
+  }
+}
 
 function botBuildRaidReport(message) {
   var botRaidUser;
@@ -189,4 +228,12 @@ function botToggleSlimes() {
     console.log('Starting slime purchases');
     botBuySlimes = true;
   }
+}
+
+function botSetTarget(username) {
+  botRaidTarget = username;
+}
+
+function botClearTarget() {
+  botRaidTarget = null;
 }
