@@ -4,12 +4,13 @@ var botPurchasing = false;
 var botFightingRandomBoss = false;
 var botFightingGlobalBoss = false;
 var botBuySlimes = false;
+var botTickActivity = false;
 var botGlobalBossTimer;
 
 function mainLoop() {
-  //first, deal with pop-ups
+  botTickActivity = false;
+
   if($('#popup').is(':visible')) {
-    // we check the title and respond accordingly
     var botPopupTitle = $('#popup p[name="title"]').text();
     switch(botPopupTitle) {
       case 'Raid report':
@@ -37,6 +38,7 @@ function mainLoop() {
       case 'Battle Report':
       case 'ACTIVITY PASSED!':
       case 'SCENARIO #1':
+      case 'Lobby Closed':
         clickButton('CONTINUE');
         break;
       default:
