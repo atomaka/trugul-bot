@@ -36,11 +36,13 @@ function mainLoop() {
         }
         break;
       case 'Raid':
-        if(botRaiding) {
-          clickButton('Raid!');
-          botRaiding = false;
-        } else {
-          clickButton('Nevermind');
+        if(haveRaidTarget() === true) {
+          if(botRaiding) {
+            clickButton('Raid!');
+            botRaiding = false;
+          } else {
+            clickButton('Nevermind');
+          }
         }
         break;
       case 'WHOOPS!':
