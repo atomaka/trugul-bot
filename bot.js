@@ -109,16 +109,8 @@ function botFillIn(selector, text) {
 function raidRefreshing() {
   if($('span[name="raidtime"]').css('display') == 'none') {
     return false;
-  }
-
-  switch($('span[name="raidtime"]').text().trim()) {
-    case '':
-    case '0 second(s) until you can raid again':
-      return false;
-      break;
-    default:
-      return true;
-      break;
+  } else {
+    return true;
   }
 }
 
