@@ -58,7 +58,7 @@ function mainLoop() {
   }
 
   //RANDOM BOSS
-  if(randomBossRefreshing() === true && botFightingRandomBoss === true) {
+  if(randomBossRefreshing() === true && botFightingRandomBoss === true && botFightingGlobalBoss === false) {
     botFightingRandomBoss = false;
   } else if(randomBossRefreshing() === false && botFightingRandomBoss === false) {
     clickSelector('#randomBossPortal a');
