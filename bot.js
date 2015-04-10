@@ -107,7 +107,7 @@ function botFillIn(selector, text) {
 }
 
 function raidRefreshing() {
-  if($('span[name="raidtime"]').text().trim() == "") {
+  if($('span[name="raidtime"]').text().trim() == "" || $('span[name="raidtime"]').text().trim() == "0 second(s) until you can raid again") {
     return false;
   } else {
     return true;
