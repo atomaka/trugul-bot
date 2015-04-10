@@ -5,13 +5,10 @@ var botRaiding = false;
 var botFightingRandomBoss = false;
 var botFightingGlobalBoss = false;
 var botBuySlimes = false;
-var botTickActivity = false;
 var botRaidTarget = null;
 var botGlobalBossTimer;
 
 function mainLoop() {
-  botTickActivity = false;
-
   if($('#popup').is(':visible')) {
     var botPopupTitle = $('#popup p[name="title"]').text();
     switch(botPopupTitle) {
@@ -61,51 +58,45 @@ function mainLoop() {
   }
 
   //RANDOM BOSS
-  if(randomBossRefreshing() === true && botFightingRandomBoss === true && botTickActivity === false) {
+  if(randomBossRefreshing() === true && botFightingRandomBoss === true) {
     botFightingRandomBoss = false;
   } else if(randomBossRefreshing() === false && botFightingRandomBoss === false) {
     clickSelector('#randomBossPortal a');
     botFightingRandomBoss = true;
-    botTickActivity = true;
   }
 
   //GLOBAL BOSS
-  if(globalBossRefreshing() === true && botFightingGlobalBoss === true && botTickActivity === false) {
+  if(globalBossRefreshing() === true && botFightingGlobalBoss === true) {
     clearInterval(botGlobalBossTimer);
     botFightingGlobalBoss = false;
   } else if(globalBossRefreshing() === false && botFightingGlobalBoss === false) {
     clickSelector('span[name="timeRemaining"]:contains("JOIN") a');
     botGlobalBossTimer = setInterval(fightGlobalBoss, 250);
     botFightingGlobalBoss = true;
-    botTickActivity = true;
   }
 
   //ACTIVATE BUFFS
-  if(inactiveBuffs() && botTickActivity === false) {
+  if(inactiveBuffs()) {
     clickSelector('button:contains("Activate")');
-    botTickActivity = true;
   }
 
   //BUY SCIENTISTS
-  if(haveBossCoins() && haveCheapLabor() && botTickActivity === false) {
+  if(haveBossCoins() && haveCheapLabor()) {
     botPurchasing = true;
     clickSelector('button[name="hiremax_scientists"]');
-    botTickActivity = true;
   }
 
   //RAID
-  if(raidRefreshing() === false && haveRaidTarget() === true && botTickActivity === false) {
+  if(raidRefreshing() === false && haveRaidTarget() === true) {
     clickSelector('button[name="raid_button"]');
     botFillIn('input[name="raid_user"]', botRaidTarget);
-    botTickActivity = true;
     botRaiding = true;
   }
 
   //BUY SLIMES
-  if(botBuySlimes === true && haveTrillions(10) && botTickActivity === false) {
+  if(botBuySlimes === true && haveTrillions(10) && botPurchasing === false) {
     botPurchasing = true;
     clickSelector('button[name="buymax-knight"]');
-    botTickActivity = true;
   }
 }
 
