@@ -46,7 +46,6 @@ function mainLoop() {
       case 'BATTLE REPORT':
       case 'Battle Report':
       case 'ACTIVITY PASSED!':
-      case 'ACTIVITY FAILED!':
       case 'SCENARIO #1':
       case 'Lobby closed':
       case 'Wait':
@@ -56,49 +55,48 @@ function mainLoop() {
         console.log('Unknown popup: ' + botPopupTitle);
         break;
     }
-  } else {
+  }
 
-    //RANDOM BOSS
-    if(randomBossRefreshing() === true && botFightingRandomBoss === true && botFightingGlobalBoss === false) {
-      botFightingRandomBoss = false;
-    } else if(randomBossRefreshing() === false && botFightingRandomBoss === false) {
-      clickSelector('#randomBossPortal a');
-      botFightingRandomBoss = true;
-    }
+  //RANDOM BOSS
+  if(randomBossRefreshing() === true && botFightingRandomBoss === true && botFightingGlobalBoss === false) {
+    botFightingRandomBoss = false;
+  } else if(randomBossRefreshing() === false && botFightingRandomBoss === false) {
+    clickSelector('#randomBossPortal a');
+    botFightingRandomBoss = true;
+  }
 
-    //GLOBAL BOSS
-    if(globalBossRefreshing() === true && botFightingGlobalBoss === true) {
-      clearInterval(botGlobalBossTimer);
-      botFightingGlobalBoss = false;
-    } else if(globalBossRefreshing() === false && botFightingGlobalBoss === false) {
-      clickSelector('span[name="timeRemaining"]:contains("JOIN") a');
-      botGlobalBossTimer = setInterval(fightGlobalBoss, 250);
-      botFightingGlobalBoss = true;
-    }
+  //GLOBAL BOSS
+  if(globalBossRefreshing() === true && botFightingGlobalBoss === true) {
+    clearInterval(botGlobalBossTimer);
+    botFightingGlobalBoss = false;
+  } else if(globalBossRefreshing() === false && botFightingGlobalBoss === false) {
+    clickSelector('span[name="timeRemaining"]:contains("JOIN") a');
+    botGlobalBossTimer = setInterval(fightGlobalBoss, 250);
+    botFightingGlobalBoss = true;
+  }
 
-    //ACTIVATE BUFFS
-    if(inactiveBuffs()) {
-      clickSelector('button:contains("Activate")');
-    }
+  //ACTIVATE BUFFS
+  if(inactiveBuffs()) {
+    clickSelector('button:contains("Activate")');
+  }
 
-    //BUY SCIENTISTS
-    if(haveBossCoins() && haveCheapLabor()) {
-      botPurchasing = true;
-      clickSelector('button[name="hiremax_scientists"]');
-    }
+  //BUY SCIENTISTS
+  if(haveBossCoins() && haveCheapLabor()) {
+    botPurchasing = true;
+    clickSelector('button[name="hiremax_scientists"]');
+  }
 
-    //RAID
-    if(raidRefreshing() === false && haveRaidTarget() === true) {
-      clickSelector('button[name="raid_button"]');
-      botFillIn('input[name="raid_user"]', botRaidTarget);
-      botRaiding = true;
-    }
+  //RAID
+  if(raidRefreshing() === false && haveRaidTarget() === true) {
+    clickSelector('button[name="raid_button"]');
+    botFillIn('input[name="raid_user"]', botRaidTarget);
+    botRaiding = true;
+  }
 
-    //BUY SLIMES
-    if(botBuySlimes === true && haveTrillions(10) && botPurchasing === false) {
-      botPurchasing = true;
-      clickSelector('button[name="buymax-knight"]');
-    }
+  //BUY SLIMES
+  if(botBuySlimes === true && haveTrillions(10) && botPurchasing === false) {
+    botPurchasing = true;
+    clickSelector('button[name="buymax-knight"]');
   }
 }
 
