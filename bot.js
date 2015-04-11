@@ -67,7 +67,7 @@ function mainLoop() {
   }
 
   //GLOBAL BOSS
-  if(globalBossRefreshing() === true && botFightingGlobalBoss === true) {
+  if(globalBossRefreshing() === true && botFightingGlobalBoss === true && botFightGlobal === true) {
     clearInterval(botGlobalBossTimer);
     botFightingGlobalBoss = false;
   } else if(globalBossRefreshing() === false && botFightingGlobalBoss === false) {
