@@ -5,6 +5,7 @@ var botRaiding = false;
 var botFightingRandomBoss = false;
 var botFightingGlobalBoss = false;
 var botBuySlimes = false;
+var botFightGlobal = true;
 var botRaidTarget = null;
 var botGlobalBossTimer;
 
@@ -220,6 +221,16 @@ function botToggleSlimes() {
   } else {
     console.log('Starting slime purchases');
     botBuySlimes = true;
+  }
+}
+
+function botToggleGlobal() {
+  if(botFightGlobal) {
+    console.log('Stopping global fighting');
+    botFightGlobal = false;
+  } else {
+    console.log('Starting global fighting');
+    botFightGlobal = true;
   }
 }
 
