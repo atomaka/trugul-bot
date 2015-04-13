@@ -106,10 +106,9 @@ function mainLoop() {
   }
 }
 
-botSetup();
 botToggle();
 
-function botSetup() {
+function botToggleUI() {
   clickSelector('a[name="portal"]');
   clickSelector('button[name="vault_hide"]');
   $('a[name="bossPortal"] > img').toggle();
@@ -153,15 +152,20 @@ function botBuildRaidReport(message) {
   return "RAIDED (" + botRaidUser + "): " + botRaidResult + "; souldiers: -" + botRaidSoldiers + "; " + botRaidResult + " money: " + botRaidStolen;
 }
 
-function haveTrillions(trillions) {
-  var botCurrency = $('#money_display').text();
-  var botLowerLimit = trillions * 1000000000000;
-  var botCurrencyInt = Number(botCurrency.replace(/[^0-9\.]+/g,""));
-  if(botCurrencyInt > botLowerLimit) {
+function haveTrillions(number) {
+  if(convertToNumber($('#money_display').text()) > trillions(number)) {
     return true;
   } else {
     return false;
   }
+}
+
+function convertToNumber(string) {
+  return Number(string.replace(/[^0-9\.]+/g, ''));
+}
+
+function trillions(number) {
+  return number * 1000000000000;
 }
 
 function haveBossCoins() {
