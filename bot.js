@@ -106,7 +106,18 @@ function mainLoop() {
   }
 }
 
+botSetup();
 botToggle();
+
+function botSetup() {
+  clickSelector('a[name="portal"]');
+  clickSelector('button[name="vault_hide"]');
+  $('a[name="bossPortal"] > img').toggle();
+}
+
+function botTimestamp() {
+  return Math.floor(Date.now() / 1000);
+}
 
 function botFillIn(selector, text) {
   $(selector).val(text);
