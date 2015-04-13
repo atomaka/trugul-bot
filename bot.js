@@ -8,6 +8,7 @@ var botFightingGlobalBoss = false;
 var botBuySlimes = false;
 var botFightGlobal = true;
 var botRaidTarget = null;
+var botLastRandom;
 
 function mainLoop() {
   if($('#popup').is(':visible')) {
@@ -20,6 +21,7 @@ function mainLoop() {
         break;
       case 'SUMMON BOSS':
         clickButton('Summon Boss');
+        botLastRandom = botTimestamp();
         break;
       case 'Are you sure?':
         clickButton('Activate Item');
@@ -61,6 +63,9 @@ function mainLoop() {
     if(randomBossRefreshing() === true && botFightingRandomBoss === true && botFightingGlobalBoss === false) {
       botFightingRandomBoss = false;
     } else if(randomBossRefreshing() === false && botFightingRandomBoss === false) {
+      clickSelector('#randomBossPortal a');
+      botFightingRandomBoss = true;
+    } else if(botTimestamp() > botLastRandom + 180) {
       clickSelector('#randomBossPortal a');
       botFightingRandomBoss = true;
     }
