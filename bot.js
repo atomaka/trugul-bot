@@ -52,6 +52,7 @@ function mainLoop() {
       case 'SCENARIO #1':
       case 'Lobby closed':
       case 'Wait':
+      case 'ACTIVITY FAILED!':
         clickButton('CONTINUE');
         break;
       default:
