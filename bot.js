@@ -322,10 +322,12 @@ function botToggleUI() {
 
 function botToggleSleep() {
   if(botSleeping) {
+    console.log('Stopping sleep mode');
     botFightRandom = true;
     botFightGlobal = true;
     botSleeping = false;
   } else {
+    console.log('Starting sleep mode');
     botFightRandom = false;
     botFightGlobal = false;
     botBuySlimes = false;
