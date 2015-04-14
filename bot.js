@@ -11,6 +11,7 @@ var botFightGlobal = true;
 var botFightRandom = true;
 var botRaidTarget = null;
 var botLastRandom = 0;
+var botSleeping = false;
 
 function mainLoop() {
   if($('#popup').is(':visible')) {
@@ -250,6 +251,14 @@ function clickSelector(selector) {
   $(selector).get(0).click();
 }
 
+function botSetTarget(username) {
+  botRaidTarget = username;
+}
+
+function botClearTarget() {
+  botRaidTarget = null;
+}
+
 function botToggle() {
   if(botPaused) {
     console.log('Playing bot');
@@ -300,10 +309,24 @@ function botToggleUI() {
   $('a[name="bossPortal"] > img').toggle();
 }
 
-function botSetTarget(username) {
-  botRaidTarget = username;
+function botToggleSleep() {
+  if(botSleeping) {
+    botFightRandom = true;
+    botFightGlobal = true;
+    botSleeping = false;
+  } else {
+    botFightRandom = false;
+    botFightGlobal = false;
+    botBuySlimes = false;
+    botSleeping = true;
+  }
 }
 
-function botClearTarget() {
-  botRaidTarget = null;
-}
+function bt() { botToggle(); }
+function bs() { botToggleSleep(); }
+function bts() { botToggleSlimes(); }
+function btu() { botToggleUI(); }
+function btg() { botToggleGlobal(); }
+function btr() { botToggleRandom(); }
+function bst(username) { botSetTarget(username); }
+function bct() { botClearTarget(); }
