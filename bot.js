@@ -7,6 +7,7 @@ var botRaiding = false;
 var botFightingRandomBoss = false;
 var botFightingGlobalBoss = false;
 var botBuySlimes = false;
+var botBuyWorkers = false;
 var botFightGlobal = true;
 var botFightRandom = true;
 var botRaidTarget = null;
@@ -48,6 +49,12 @@ function mainLoop() {
           } else {
             clickButton('Nevermind');
           }
+        }
+        break;
+      case 'CONFIRM':
+        if(botPurchasing) {
+          clickButton('Yes');
+          botPurchasing = false;
         }
         break;
       case 'WHOOPS!':
@@ -94,7 +101,7 @@ function mainLoop() {
     }
 
     //BUY SCIENTISTS
-    if(haveBossCoins() && haveCheapLabor()) {
+    if(haveBossCoins() && haveCheapLabor() && botPurchasing === false) {
       botPurchasing = true;
       clickSelector('button[name="hiremax_scientists"]');
     }
@@ -111,10 +118,36 @@ function mainLoop() {
       botPurchasing = true;
       clickSelector('button[name="buymax-knight"]');
     }
+
+    //BUY WORKERS
+    if(botBuyWorkers === true && haveTrillions(10) && haveCheapLabor() === true && botPurchasing === false) {
+      botPurchasing = true;
+      clickSelector('button[name="buymax-' + mostEfficientWorker() + '"]');
+    }
   }
 }
 
 botToggle();
+
+function mostEfficientWorker() {
+  var bestValueWorker;
+  var bestValue;
+  $('table[name="workers"] > tbody').children().each(function() {
+    var workersTable = $(this);
+    if(workersTable.is('[name]') && workersTable.attr('name') != 'capturedminion' && workersTable.attr('name') != 'gb_capturedminion') {
+      var price = convertToNumber(workersTable.find('span[name="price"]').text());
+      var opm = convertToNumber(workersTable.find('span[name="opm"]').text());
+      var value = opm / price;
+
+      if(bestValueWorker == null || bestValue < value) {
+        bestValueWorker = workersTable.attr('name');
+        bestValue = value;
+      }
+    }
+  });
+
+  return bestValueWorker;
+}
 
 function internalRaidRefreshing() {
   if(botTimestamp() > botLastRaid + 300) {
@@ -294,6 +327,16 @@ function botToggleSlimes() {
   }
 }
 
+function botToggleWorkers() {
+  if(botBuyWorkers) {
+    console.log('Stopping worker purchases');
+    botBuyWorkers = false;
+  } else {
+    console.log('Starting worker purchases');
+    botBuyWorkers = true;
+  }
+}
+
 function botToggleGlobal() {
   if(botFightGlobal) {
     console.log('Stopping global fighting');
@@ -339,6 +382,7 @@ function botHelp() {
   console.log('bt(): Toggle for the entire bot.');
   console.log('bs(): Toggle "sleep mode." Disables all actions, but logs raids and chat.');
   console.log('bts(): Toggle auto-slime purchasing.');
+  console.log('btw(): Toggle auto-worker purchasing (detects most efficient).');
   console.log('btu(): Toggle the UI (probably only works once).');
   console.log('btg(): Toggle the global boss.');
   console.log('btr(): Toggle the random boss.');
@@ -349,6 +393,7 @@ function botHelp() {
 function bt() { botToggle(); }
 function bs() { botToggleSleep(); }
 function bts() { botToggleSlimes(); }
+function btw() { botToggleWorkers(); }
 function btu() { botToggleUI(); }
 function btg() { botToggleGlobal(); }
 function btr() { botToggleRandom(); }
