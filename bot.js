@@ -9,7 +9,7 @@ var botFightingGlobalBoss = false;
 var botBuySlimes = false;
 var botFightGlobal = true;
 var botRaidTarget = null;
-var botLastRandom;
+var botLastRandom = 0;
 
 function mainLoop() {
   if($('#popup').is(':visible')) {
@@ -54,6 +54,7 @@ function mainLoop() {
       case 'Lobby closed':
       case 'Wait':
       case 'ACTIVITY FAILED!':
+      case 'Game in progress':
         clickButton('CONTINUE');
         break;
       default:
