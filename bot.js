@@ -322,6 +322,17 @@ function botToggleSleep() {
   }
 }
 
+function botHelp() {
+  console.log('bt(): Toggle for the entire bot.');
+  console.log('bs(): Toggle "sleep mode." Disables all actions, but logs raids and chat.');
+  console.log('bts(): Toggle auto-slime purchasing.');
+  console.log('btu(): Toggle the UI (probably only works once).');
+  console.log('btg(): Toggle the global boss.');
+  console.log('btr(): Toggle the random boss.');
+  console.log('bst("username"): Set a target to raid every 5 minutes.');
+  console.log('bct(): Clear the raid target.');
+}
+
 function bt() { botToggle(); }
 function bs() { botToggleSleep(); }
 function bts() { botToggleSlimes(); }
