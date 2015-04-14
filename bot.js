@@ -11,6 +11,7 @@ var botFightGlobal = true;
 var botFightRandom = true;
 var botRaidTarget = null;
 var botLastRandom = 0;
+var botLastRaid = 0;
 var botSleeping = false;
 
 function mainLoop() {
@@ -20,6 +21,7 @@ function mainLoop() {
       case 'Raid report':
         var botMessage = botBuildRaidReport($('#popup div[name="content"]').text());
         console.log(botMessage);
+        botLastRaid = botTimestamp();
         clickButton('CONTINUE');
         break;
       case 'SUMMON BOSS':
@@ -57,6 +59,7 @@ function mainLoop() {
       case 'Wait':
       case 'ACTIVITY FAILED!':
       case 'Game in progress':
+      case 'User not found':
         clickButton('CONTINUE');
         break;
       default:
@@ -97,7 +100,7 @@ function mainLoop() {
     }
 
     //RAID
-    if(raidRefreshing() === false && haveRaidTarget() === true && botFightRandom === true) {
+    if(raidRefreshing() === false && haveRaidTarget() === true && botFightRandom === true && internalRaidRefreshing() === false) {
       clickSelector('button[name="raid_button"]');
       botFillIn('input[name="raid_user"]', botRaidTarget);
       botRaiding = true;
@@ -112,6 +115,14 @@ function mainLoop() {
 }
 
 botToggle();
+
+function internalRaidRefreshing() {
+  if(botTimestamp() > botLastRaid + 300) {
+    return false;
+  } else {
+    return true;
+  }
+}
 
 function haveSoldiers() {
   if(convertToNumber($('tr[name="knight"] > .owned').text()) == 0) {
