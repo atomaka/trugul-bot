@@ -68,7 +68,7 @@ function mainLoop() {
     }
   } else {
     //RANDOM BOSS
-    if(randomBossRefreshing() === true && botFightingRandomBoss === true && botFightingGlobalBoss === false && haveSoldiers()) {
+    if(randomBossRefreshing() === true && botFightingRandomBoss === true && botFightingGlobalBoss === false && haveSoldiers() && botFightRandom === true)  {
       botFightingRandomBoss = false;
     } else if(randomBossRefreshing() === false && botFightingRandomBoss === false) {
       clickSelector('#randomBossPortal a');
@@ -100,7 +100,7 @@ function mainLoop() {
     }
 
     //RAID
-    if(raidRefreshing() === false && haveRaidTarget() === true && botFightRandom === true && internalRaidRefreshing() === false) {
+    if(raidRefreshing() === false && haveRaidTarget() === true && internalRaidRefreshing() === false) {
       clickSelector('button[name="raid_button"]');
       botFillIn('input[name="raid_user"]', botRaidTarget);
       botRaiding = true;
