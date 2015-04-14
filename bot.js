@@ -1,3 +1,4 @@
+var botUsers = ['atomaka','greggnic'];
 var botLoop;
 var botGlobalBossTimer;
 var botPaused = true;
@@ -135,7 +136,8 @@ function chatIsPM(message) {
 }
 
 function chatHasName(message) {
-  return /atomaka/.exec(message.find('.message').text()) != null;
+  var string = message.find('.message').text();
+  return (new RegExp( '\\b' + botUsers.join('\\b|\\b') + '\\b')).test(string) === true;
 }
 
 function botTimestamp() {
