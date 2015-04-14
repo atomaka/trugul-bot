@@ -109,10 +109,23 @@ function mainLoop() {
 
 botToggle();
 
-function botToggleUI() {
-  clickSelector('a[name="portal"]');
-  clickSelector('button[name="vault_hide"]');
-  $('a[name="bossPortal"] > img').toggle();
+function chatMonitor() {
+  $('#chatbox, #groupchatbox').bind('DOMSubtreeModified', function() {
+    var lastMessage = $(this).find('.chat-message').last();
+    if(chatIsPM(lastMessage) || chatHasName(lastMessage)) {
+      var user = lastMessage.find('.username').text().trim();
+      var content = lastMessage.find('.message').text().trim();
+      console.log('CHAT (' + user + '): ' + content);
+    }
+  });
+}
+
+function chatIsPM(message) {
+  return message.find('.chat-pm').length > 0;
+}
+
+function chatHasName(message) {
+  return /atomaka/.exec(message.find('.message').text()) != null;
 }
 
 function botTimestamp() {
@@ -227,10 +240,12 @@ function botToggle() {
   if(botPaused) {
     console.log('Playing bot');
     botLoop = setInterval(mainLoop, 1000);
+    chatMonitor();
     botPaused = false;
   } else {
     console.log('Pausing bot');
     clearInterval(botLoop);
+    $('#chatbox, #groupchatbox').unbind('DOMSubtreeModified');
     botPaused = true;
   }
 }
@@ -253,6 +268,12 @@ function botToggleGlobal() {
     console.log('Starting global fighting');
     botFightGlobal = true;
   }
+}
+
+function botToggleUI() {
+  clickSelector('a[name="portal"]');
+  clickSelector('button[name="vault_hide"]');
+  $('a[name="bossPortal"] > img').toggle();
 }
 
 function botSetTarget(username) {
