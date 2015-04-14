@@ -61,7 +61,7 @@ function mainLoop() {
     }
   } else {
     //RANDOM BOSS
-    if(randomBossRefreshing() === true && botFightingRandomBoss === true && botFightingGlobalBoss === false) {
+    if(randomBossRefreshing() === true && botFightingRandomBoss === true && botFightingGlobalBoss === false && haveSoldiers()) {
       botFightingRandomBoss = false;
     } else if(randomBossRefreshing() === false && botFightingRandomBoss === false) {
       clickSelector('#randomBossPortal a');
@@ -108,6 +108,16 @@ function mainLoop() {
 }
 
 botToggle();
+
+function haveSoldiers() {
+  if(convertToNumber($('tr[name="knight"] > .owned').text()) == 0) {
+    return false;
+  } else if(convertToNumber($('tr[name="advknight"] > .owned').text()) == 0) {
+    return false;
+  } else {
+    return true;
+  }
+}
 
 function chatMonitor() {
   $('#chatbox, #groupchatbox').bind('DOMSubtreeModified', function() {
@@ -163,7 +173,7 @@ function botBuildRaidReport(message) {
   var botRaidResult = (/won/.exec(message) !== null) ? 'won' : 'lost';
   var botRaidStolen = (/steal (.*?) from/.exec(message) !== null) ? /steal (.*?) from/.exec(message)[1] : '$0';
 
-  return "RAIDED (" + botRaidUser + "): " + botRaidResult + "; souldiers: -" + botRaidSoldiers + "; " + botRaidResult + " money: " + botRaidStolen;
+  return "RAIDED (" + botRaidUser + "): " + botRaidResult + "; soldiers: -" + botRaidSoldiers + "; " + botRaidResult + " money: " + botRaidStolen;
 }
 
 function haveTrillions(number) {
