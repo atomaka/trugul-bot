@@ -1,4 +1,3 @@
-var botUsers = ['atomaka','greggnic'];
 var botLoop;
 var botGlobalBossTimer;
 var botPaused = true;
@@ -14,6 +13,7 @@ var botRaidTarget = null;
 var botLastRandom = 0;
 var botLastRaid = 0;
 var botSleeping = false;
+var botUser = null;
 
 function mainLoop() {
   if($('#popup').is(':visible')) {
@@ -127,7 +127,33 @@ function mainLoop() {
   }
 }
 
+botDetectUser();
 botToggle();
+
+function botDetectUser() {
+  var guests = $('#player-list').children().find('span.username-holder:contains("Guest_")');
+  var randomGuest = $(guests[Math.floor(Math.random() * guests.length)]).text();
+
+  $('#chatbox').bind('DOMSubtreeModified', function() {
+    var lastMessage = $(this).find('.chat-message').last();
+    if(lastMessage.find('.chat-pm').text() == 'PM -> ' + randomGuest) {
+      botUser = lastMessage.find('.username').text().trim();
+      console.log('Setting bot user to ' + botUser);
+      $('#chatbox').unbind('DOMSubtreeModified');
+      chatMonitor();
+    }
+  });
+
+  botSendChat('/pm ' + randomGuest + ' hello!');
+}
+
+function botSendChat(message) {
+  botFillIn('#chat_msg', message);
+  var e = jQuery.Event("keypress");
+  e.which = 13;
+  e.keyCode = 13;
+  $("#chat_msg").trigger(e);
+}
 
 function mostEfficientWorker() {
   var bestValueWorker;
@@ -183,8 +209,11 @@ function chatIsPM(message) {
 }
 
 function chatHasName(message) {
+  if(botUser == null) {
+    return false;
+  }
   var string = message.find('.message').text();
-  return (new RegExp( '\\b' + botUsers.join('\\b|\\b') + '\\b')).test(string) === true;
+  return (new RegExp('\\b' + botUser + '\\b')).test(string);
 }
 
 function botTimestamp() {
@@ -307,12 +336,10 @@ function botToggle() {
   if(botPaused) {
     console.log('Playing bot');
     botLoop = setInterval(mainLoop, 1000);
-    chatMonitor();
     botPaused = false;
   } else {
     console.log('Pausing bot');
     clearInterval(botLoop);
-    $('#chatbox, #groupchatbox').unbind('DOMSubtreeModified');
     botPaused = true;
   }
 }
