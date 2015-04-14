@@ -1,3 +1,6 @@
+var BOT_WORKER_MONEY = 1;
+var BOT_SLIME_MONEY = 10;
+
 var botLoop;
 var botGlobalBossTimer;
 var botPaused = true;
@@ -114,13 +117,13 @@ function mainLoop() {
     }
 
     //BUY SLIMES
-    if(botBuySlimes === true && haveTrillions(10) && botPurchasing === false) {
+    if(botBuySlimes === true && haveTrillions(BOT_SLIME_MONEY) && botPurchasing === false) {
       botPurchasing = true;
       clickSelector('button[name="buymax-knight"]');
     }
 
     //BUY WORKERS
-    if(botBuyWorkers === true && haveTrillions(10) && haveCheapLabor() === true && botPurchasing === false) {
+    if(botBuyWorkers === true && haveTrillions(BOT_WORKER_MONEY) && haveCheapLabor() === true && botPurchasing === false) {
       botPurchasing = true;
       clickSelector('button[name="buymax-' + mostEfficientWorker() + '"]');
     }
