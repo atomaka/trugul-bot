@@ -305,7 +305,7 @@ function botToggleGlobal() {
 }
 
 function botToggleRandom() {
-  if(botFightGlobal) {
+  if(botFightRandom) {
     console.log('Stopping random fighting');
     botFightRandom = false;
   } else {
