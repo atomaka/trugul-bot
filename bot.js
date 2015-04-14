@@ -8,6 +8,7 @@ var botFightingRandomBoss = false;
 var botFightingGlobalBoss = false;
 var botBuySlimes = false;
 var botFightGlobal = true;
+var botFightRandom = true;
 var botRaidTarget = null;
 var botLastRandom = 0;
 
@@ -95,7 +96,7 @@ function mainLoop() {
     }
 
     //RAID
-    if(raidRefreshing() === false && haveRaidTarget() === true) {
+    if(raidRefreshing() === false && haveRaidTarget() === true && botFightRandom === true) {
       clickSelector('button[name="raid_button"]');
       botFillIn('input[name="raid_user"]', botRaidTarget);
       botRaiding = true;
@@ -280,6 +281,16 @@ function botToggleGlobal() {
   } else {
     console.log('Starting global fighting');
     botFightGlobal = true;
+  }
+}
+
+function botToggleRandom() {
+  if(botFightGlobal) {
+    console.log('Stopping random fighting');
+    botFightRandom = false;
+  } else {
+    console.log('Starting random fighting');
+    botFightRandom = true;
   }
 }
 
