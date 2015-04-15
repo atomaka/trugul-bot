@@ -78,12 +78,12 @@ function mainLoop() {
     }
   } else {
     //RANDOM BOSS
-    if(randomBossRefreshing() === true && botFightingRandomBoss === true && botFightingGlobalBoss === false && haveSoldiers())  {
+    if(randomBossRefreshing() === true && botFightingRandomBoss === true && botFightingGlobalBoss === false)  {
       botFightingRandomBoss = false;
-    } else if(randomBossRefreshing() === false && botFightingRandomBoss === false && botFightRandom === true) {
+    } else if(randomBossRefreshing() === false && botFightingRandomBoss === false && botFightRandom === true && haveSoldiers()) {
       clickSelector('#randomBossPortal a');
       botFightingRandomBoss = true;
-    } else if(botTimestamp() > botLastRandom + 180 && botFightRandom === true) {
+    } else if(botTimestamp() > botLastRandom + 180 && botFightRandom === true && haveSoldiers()) {
       clickSelector('#randomBossPortal a');
       botFightingRandomBoss = true;
     }
