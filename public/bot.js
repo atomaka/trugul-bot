@@ -61,7 +61,6 @@ function mainLoop() {
         }
         break;
       case 'WHOOPS!':
-        botPurchasing = false;
       case 'BATTLE REPORT':
       case 'Battle Report':
       case 'ACTIVITY PASSED!':
@@ -105,7 +104,7 @@ function mainLoop() {
     }
 
     //BUY SCIENTISTS
-    if(haveBossCoins() && haveCheapLabor() && botPurchasing === false && haveMaxRBMinion()) {
+    if(haveBossCoins(1) && haveCheapLabor() && botPurchasing === false && haveMaxRBMinion()) {
       botPurchasing = true;
       clickSelector('button[name="hiremax_scientists"]');
     }
@@ -128,7 +127,7 @@ function mainLoop() {
       botPurchasing = true;
       clickSelector('button[name="buymax-' + mostEfficientWorker() + '"]');
     }
-    if(botBuyWorkers === true && haveCheapLabor() === true && botPurchasing === false && haveBossCoins()) {
+    if(botBuyWorkers === true && haveCheapLabor() === true && botPurchasing === false && haveBossCoins(9)) {
       botPurchasing = true;
       clickSelector('button[name="buymax-capturedminion"]');
     }
@@ -295,8 +294,8 @@ function trillions(number) {
   return number * 1000000000000;
 }
 
-function haveBossCoins() {
-  if($('#bc_display').text() != 0) {
+function haveBossCoins(value) {
+  if(convertToNumber($('#bc_display').text()) >= value) {
     return true;
   } else {
     return false;
