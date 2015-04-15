@@ -61,6 +61,7 @@ function mainLoop() {
         }
         break;
       case 'WHOOPS!':
+        botPurchasing = false;
       case 'BATTLE REPORT':
       case 'Battle Report':
       case 'ACTIVITY PASSED!':
