@@ -104,7 +104,7 @@ function mainLoop() {
     }
 
     //BUY SCIENTISTS
-    if(haveBossCoins() && haveCheapLabor() && botPurchasing === false) {
+    if(haveBossCoins() && haveCheapLabor() && botPurchasing === false && haveMaxRBMinion()) {
       botPurchasing = true;
       clickSelector('button[name="hiremax_scientists"]');
     }
@@ -127,14 +127,26 @@ function mainLoop() {
       botPurchasing = true;
       clickSelector('button[name="buymax-' + mostEfficientWorker() + '"]');
     }
+    if(botBuyWorkers === true && haveCheapLabor() === true && botPurchasing === false && haveBossCoins()) {
+      botPurchasing = true;
+      clickSelector('button[name="buymax-capturedminion"]');
+    }
   }
 }
 
 botDetectUser();
 botToggle();
 
+function haveMaxRBMinion() {
+  var rb = $('tr[name="capturedminion"]').find('span[name="owned"]').text();
+  rb = rb.replace(/\s+/g, '');
+  var rbA = rb.split('/');
+
+  return convertToNumber(rbA[0]) == convertToNumber(rbA[1]);
+}
+
 function botDetectUser() {
-  var guests = $('#player-list').children().find('span.username-holder:contains("Guest_")');
+  var guests = $('#player-list').find('span.username-holder');
   var randomGuest = $(guests[Math.floor(Math.random() * guests.length)]).text();
 
   $('#chatbox').bind('DOMSubtreeModified', function() {
