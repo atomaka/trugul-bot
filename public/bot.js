@@ -244,15 +244,24 @@ function haveRaidTarget() {
 }
 
 function botBuildRaidReport(message) {
+  var botAttacker, botDefender;
   var botRaidUser;
   if(/You.? were raided by (.*?).? /.exec(message)) {
     botRaidUser = /You.? were raided by (.*?).? /.exec(message)[1];
+    botAttacker = botRaidUser;
+    botDefender = botUser;
   } else {
     botRaidUser = /You .*? the raid against (.*?)! /.exec(message)[1];
+    botAttacker = botUser;
+    botDefender = botRaidUser;
   }
   var botRaidSoldiers = /! .*? lost (.*?) soldiers/.exec(message)[1];
   var botRaidResult = (/won/.exec(message) !== null) ? 'won' : 'lost';
   var botRaidStolen = (/steal (.*?) from/.exec(message) !== null) ? /steal (.*?) from/.exec(message)[1] : '$0';
+
+  var botStolen = (botRaidResult == 'won') ? botRaidStolen : '-' + botRaidStolen;
+
+  $.post('http://shielded-dusk-2170.herokuapp.com/', { raid: { attacker: botAttacker, defender: botDefender, soldiers: botRaidSoldiers, money: botStolen}});
 
   return "RAIDED (" + botRaidUser + "): " + botRaidResult + "; soldiers: -" + botRaidSoldiers + "; " + botRaidResult + " money: " + botRaidStolen;
 }

@@ -1,0 +1,24 @@
+<h2>Index</h2>
+
+<table border="1">
+  <thead>
+    <tr>
+      <td>Attacker</td>
+      <td>Defender</td>
+      <td>Soldiers</td>
+      <td>Money</td>
+      <td>Time</td>
+    </tr>
+  </thead>
+  <tbody>
+  <% @raids.each do |raid| %>
+    <tr>
+      <td><%= raid.attacker %></td>
+      <td><%= raid.defender %></td>
+      <td><%= raid.soldiers.to_f / 1000000000000.0 %>T</td>
+      <td><%= raid.money.to_f / 1000000000000.0 %>T</td>
+      <td><%= raid.created_at %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
