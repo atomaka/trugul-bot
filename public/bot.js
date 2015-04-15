@@ -199,9 +199,9 @@ function internalRaidRefreshing() {
 }
 
 function haveSoldiers() {
-  if(convertToNumber($('tr[name="knight"] > .owned').text()) == 0) {
+  if(convertToNumber($('tr[name="knight"]').find('span[name="owned"]').text()) == 0) {
     return false;
-  } else if(convertToNumber($('tr[name="advknight"] > .owned').text()) == 0) {
+  } else if(convertToNumber($('tr[name="advknight"]').find('span[name="owned"]').text()) == 0) {
     return false;
   } else {
     return true;
