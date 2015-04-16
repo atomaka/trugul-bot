@@ -15,6 +15,7 @@ var botFightRandom = true;
 var botRaidTarget = null;
 var botLastRandom = 0;
 var botLastRaid = 0;
+var botLastPurchase = 0;
 var botSleeping = false;
 var botUser = null;
 
@@ -103,12 +104,6 @@ function mainLoop() {
       clickSelector('button:contains("Activate")');
     }
 
-    //BUY SCIENTISTS
-    if(haveBossCoins() && haveCheapLabor() && botPurchasing === false && haveMaxRBMinion()) {
-      botPurchasing = true;
-      clickSelector('button[name="hiremax_scientists"]');
-    }
-
     //RAID
     if(raidRefreshing() === false && haveRaidTarget() === true && internalRaidRefreshing() === false) {
       clickSelector('button[name="raid_button"]');
@@ -116,19 +111,34 @@ function mainLoop() {
       botRaiding = true;
     }
 
+    //PURCHASES
+    if(botTimestamp() > botLastPurchase + 5 && botPurchasing === true) {
+      botPurchasing = false;
+    }
+
+    //BUY SCIENTISTS
+    if(haveBossCoins(1) && haveCheapLabor() && botPurchasing === false && haveMaxRBMinion()) {
+      botPurchasing = true;
+      botLastPurchase = botTimestamp();
+      clickSelector('button[name="hiremax_scientists"]');
+    }
+
     //BUY SLIMES
     if(botBuySlimes === true && haveTrillions(BOT_SLIME_MONEY) && botPurchasing === false) {
       botPurchasing = true;
+      botLastPurchase = botTimestamp();
       clickSelector('button[name="buymax-knight"]');
     }
 
     //BUY WORKERS
     if(botBuyWorkers === true && haveTrillions(BOT_WORKER_MONEY) && haveCheapLabor() === true && botPurchasing === false) {
       botPurchasing = true;
+      botLastPurchase = botTimestamp();
       clickSelector('button[name="buymax-' + mostEfficientWorker() + '"]');
     }
-    if(botBuyWorkers === true && haveCheapLabor() === true && botPurchasing === false && haveBossCoins()) {
+    if(botBuyWorkers === true && haveCheapLabor() === true && botPurchasing === false && haveBossCoins(9)) {
       botPurchasing = true;
+      botLastPurchase = botTimestamp();
       clickSelector('button[name="buymax-capturedminion"]');
     }
   }
@@ -294,8 +304,8 @@ function trillions(number) {
   return number * 1000000000000;
 }
 
-function haveBossCoins() {
-  if($('#bc_display').text() != 0) {
+function haveBossCoins(value) {
+  if(convertToNumber($('#bc_display').text()) >= value) {
     return true;
   } else {
     return false;
