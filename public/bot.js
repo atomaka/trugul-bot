@@ -81,10 +81,10 @@ function mainLoop() {
     //RANDOM BOSS
     if(randomBossRefreshing() === true && botFightingRandomBoss === true && botFightingGlobalBoss === false)  {
       botFightingRandomBoss = false;
-    } else if(randomBossRefreshing() === false && botFightingRandomBoss === false && botFightRandom === true && haveSoldiers()) {
+    } else if(randomBossRefreshing() === false && botFightingRandomBoss === false && botFightRandom === true && haveSoldiers() === true) {
       clickSelector('#randomBossPortal a');
       botFightingRandomBoss = true;
-    } else if(botTimestamp() > botLastRandom + 180 && botFightRandom === true && haveSoldiers()) {
+    } else if(botTimestamp() > botLastRandom + 180 && botFightRandom === true && haveSoldiers() === true) {
       clickSelector('#randomBossPortal a');
       botFightingRandomBoss = true;
     }
@@ -117,26 +117,26 @@ function mainLoop() {
     }
 
     //BUY SCIENTISTS
-    if(haveBossCoins(1) && haveCheapLabor() && botPurchasing === false && haveMaxRBMinion()) {
+    if(haveBossCoins(1) === true && haveCheapLabor() === true && botPurchasing === false && haveMaxWorker('capturedminion')) {
       botPurchasing = true;
       botLastPurchase = botTimestamp();
       clickSelector('button[name="hiremax_scientists"]');
     }
 
     //BUY SLIMES
-    if(botBuySlimes === true && haveTrillions(BOT_SLIME_MONEY) && botPurchasing === false) {
+    if(botBuySlimes === true && haveTrillions(BOT_SLIME_MONEY) === true && botPurchasing === false) {
       botPurchasing = true;
       botLastPurchase = botTimestamp();
       clickSelector('button[name="buymax-knight"]');
     }
 
     //BUY WORKERS
-    if(botBuyWorkers === true && haveTrillions(BOT_WORKER_MONEY) && haveCheapLabor() === true && botPurchasing === false) {
+    if(botBuyWorkers === true && haveTrillions(BOT_WORKER_MONEY) === true && haveCheapLabor() === true && botPurchasing === false) {
       botPurchasing = true;
       botLastPurchase = botTimestamp();
       clickSelector('button[name="buymax-' + mostEfficientWorker() + '"]');
     }
-    if(botBuyWorkers === true && haveCheapLabor() === true && botPurchasing === false && haveBossCoins(9)) {
+    if(botBuyWorkers === true && haveCheapLabor() === true && botPurchasing === false && haveBossCoins(9) === true) {
       botPurchasing = true;
       botLastPurchase = botTimestamp();
       clickSelector('button[name="buymax-capturedminion"]');
@@ -147,12 +147,12 @@ function mainLoop() {
 botDetectUser();
 botToggle();
 
-function haveMaxRBMinion() {
-  var rb = $('tr[name="capturedminion"]').find('span[name="owned"]').text();
-  rb = rb.replace(/\s+/g, '');
-  var rbA = rb.split('/');
+function haveMaxWorker(type) {
+  var worker = $('tr[name="' + type + '"]').find('span[name="owned"]').text();
+  worker = worker.replace(/\s+/g, '');
+  var workerArray = worker.split('/');
 
-  return convertToNumber(rbA[0]) == convertToNumber(rbA[1]);
+  return convertToNumber(workerArray[0]) == convertToNumber(workerArray[1]);
 }
 
 function botDetectUser() {
@@ -190,7 +190,7 @@ function mostEfficientWorker() {
       var opm = convertToNumber(workersTable.find('span[name="opm"]').text());
       var value = opm / price;
 
-      if(bestValueWorker == null || bestValue < value) {
+      if(bestValueWorker == null || bestValue < value && haveMaxWorker(workersTable.attr('name')) === false) {
         bestValueWorker = workersTable.attr('name');
         bestValue = value;
       }
