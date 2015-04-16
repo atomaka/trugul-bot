@@ -146,7 +146,7 @@ function haveMaxRBMinion() {
 }
 
 function botDetectUser() {
-  var guests = $('#player-list').find('span.username-holder');
+  var guests = $('#player-list div.no-icon span.username-holder');
   var randomGuest = $(guests[Math.floor(Math.random() * guests.length)]).text();
 
   $('#chatbox').bind('DOMSubtreeModified', function() {
