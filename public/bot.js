@@ -16,6 +16,7 @@ var botRaidTarget = null;
 var botLastRandom = 0;
 var botLastRaid = 0;
 var botLastPurchase = 0;
+var botLastChatClear = 0;
 var botSleeping = false;
 var botUser = null;
 
@@ -141,6 +142,12 @@ function mainLoop() {
       botLastPurchase = botTimestamp();
       clickSelector('button[name="buymax-capturedminion"]');
     }
+  }
+
+  //CLEAR CHAT
+  if(botTimestamp() > botLastChatClear + (15 * 60)) {
+    clickSelector('#chat_clear');
+    botLastChatClear = botTimestamp();
   }
 }
 
