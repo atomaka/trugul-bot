@@ -1,10 +1,12 @@
 var BOT_WORKER_MONEY = 1;
 var BOT_SLIME_MONEY = 10;
+var CHAT_LIMIT = 150;
 
 var botLoop;
 var botGlobalBossTimer;
 var botPaused = true;
 var botPurchasing = false;
+var botSleeping = false;
 var botRaiding = false;
 var botFightingRandomBoss = false;
 var botFightingGlobalBoss = false;
@@ -12,12 +14,11 @@ var botBuySlimes = false;
 var botBuyWorkers = false;
 var botFightGlobal = true;
 var botFightRandom = true;
+var botChatClear = true;
 var botRaidTarget = null;
 var botLastRandom = 0;
 var botLastRaid = 0;
 var botLastPurchase = 0;
-var botLastChatClear = 0;
-var botSleeping = false;
 var botUser = null;
 
 function mainLoop() {
@@ -145,14 +146,21 @@ function mainLoop() {
   }
 
   //CLEAR CHAT
-  if(botTimestamp() > botLastChatClear + (15 * 60)) {
-    clickSelector('#chat_clear');
-    botLastChatClear = botTimestamp();
+  if(haveChatLines(CHAT_LIMIT) === true && botChatClear === true) {
+    $('#chatbox div:lt(' + Math.ceil(CHAT_LIMIT  * .2) + ')').remove();
   }
 }
 
 botDetectUser();
 botToggle();
+
+function haveChatLines(value) {
+  if($('#chatbox').children().length > value) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 function haveMaxWorker(type) {
   var worker = $('tr[name="' + type + '"]').find('span[name="owned"]').text();
@@ -446,6 +454,16 @@ function botToggleSleep() {
   }
 }
 
+function botToggleChatClear() {
+  if(botChatClear) {
+    console.log('Stopping chat clearing');
+    botChatClear = false;
+  } else {
+    console.log('Starting chat clearing');
+    botChatClear = true;
+  }
+}
+
 function botHelp() {
   console.log('bt(): Toggle for the entire bot.');
   console.log('bs(): Toggle "sleep mode." Disables all actions, but logs raids and chat.');
@@ -454,6 +472,7 @@ function botHelp() {
   console.log('btu(): Toggle the UI (probably only works once).');
   console.log('btg(): Toggle the global boss.');
   console.log('btr(): Toggle the random boss.');
+  console.log('btc(): Toggle the chat clear.');
   console.log('bst("username"): Set a target to raid every 5 minutes.');
   console.log('bct(): Clear the raid target.');
 }
@@ -465,5 +484,6 @@ function btw() { botToggleWorkers(); }
 function btu() { botToggleUI(); }
 function btg() { botToggleGlobal(); }
 function btr() { botToggleRandom(); }
+function btc() { botToggleChatClear(); }
 function bst(username) { botSetTarget(username); }
 function bct() { botClearTarget(); }
