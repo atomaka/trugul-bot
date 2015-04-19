@@ -14,6 +14,7 @@ var botBuySlimes = false;
 var botBuyWorkers = false;
 var botFightGlobal = true;
 var botFightRandom = true;
+var botSpendBossCoins = true;
 var botChatClear = true;
 var botRaidTarget = null;
 var botLastRandom = 0;
@@ -119,7 +120,7 @@ function mainLoop() {
     }
 
     //BUY SCIENTISTS
-    if(haveBossCoins(1) === true && haveCheapLabor() === true && botPurchasing === false && haveMaxWorker('capturedminion')) {
+    if(haveBossCoins(1) === true && haveCheapLabor() === true && botPurchasing === false && haveMaxWorker('capturedminion') && botSpendBossCoins === true) {
       botPurchasing = true;
       botLastPurchase = botTimestamp();
       clickSelector('button[name="hiremax_scientists"]');
@@ -138,7 +139,7 @@ function mainLoop() {
       botLastPurchase = botTimestamp();
       clickSelector('button[name="buymax-' + mostEfficientWorker() + '"]');
     }
-    if(botBuyWorkers === true && haveCheapLabor() === true && botPurchasing === false && haveBossCoins(9) === true) {
+    if(botBuyWorkers === true && haveCheapLabor() === true && botPurchasing === false && haveBossCoins(9) === true && botSpendBossCoins === true) {
       botPurchasing = true;
       botLastPurchase = botTimestamp();
       clickSelector('button[name="buymax-capturedminion"]');
@@ -464,6 +465,16 @@ function botToggleChatClear() {
   }
 }
 
+function botToggleBossCoins() {
+  if(botSpendBossCoins) {
+    console.log('Stopping spending boss coins');
+    botSpendBossCoins = false;
+  } else {
+    console.log('starting spending boss coins');
+    botSpendBossCoins = true;
+  }
+}
+
 function botHelp() {
   console.log('bt(): Toggle for the entire bot.');
   console.log('bs(): Toggle "sleep mode." Disables all actions, but logs raids and chat.');
@@ -473,6 +484,7 @@ function botHelp() {
   console.log('btg(): Toggle the global boss.');
   console.log('btr(): Toggle the random boss.');
   console.log('btc(): Toggle the chat clear.');
+  console.log('btb(): Toggle boss coins spending.');
   console.log('bst("username"): Set a target to raid every 5 minutes.');
   console.log('bct(): Clear the raid target.');
 }
@@ -485,5 +497,6 @@ function btu() { botToggleUI(); }
 function btg() { botToggleGlobal(); }
 function btr() { botToggleRandom(); }
 function btc() { botToggleChatClear(); }
+function btb() { botToggleBossCoins(); }
 function bst(username) { botSetTarget(username); }
 function bct() { botClearTarget(); }
