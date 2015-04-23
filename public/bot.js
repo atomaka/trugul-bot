@@ -17,6 +17,7 @@ var botFightGlobal = true;
 var botFightRandom = true;
 var botSpendBossCoins = true;
 var botChatClear = true;
+var botSaveSpears = true;
 var botRaidTarget = null;
 var botLastRandom = 0;
 var botLastRaid = 0;
@@ -120,7 +121,7 @@ function mainLoop() {
 
     //ACTIVATE BUFFS
     if(inactiveBuffs()) {
-      clickSelector('button:contains("Activate")');
+      activateBuffs();
     }
 
     //RAID
@@ -166,6 +167,19 @@ function mainLoop() {
 
 botDetectUser();
 botToggle();
+
+function activateBuffs() {
+  $('div[name="items_holder"]').children().each(function() {
+    var itemHolder = $(this);
+
+    if(itemHolder.attr('item') != 'godspear_fragment' || botSaveSpears === false) {
+      var itemButton = itemHolder.find('button:contains("Activate")');
+      if(itemButton.length > 0) {
+        itemButton.get(0).click()
+      }
+    }
+  });
+}
 
 function setBotToPurchasing() {
   botPurchasing = true;
@@ -489,8 +503,18 @@ function botToggleBossCoins() {
     console.log('Stopping spending boss coins');
     botSpendBossCoins = false;
   } else {
-    console.log('starting spending boss coins');
+    console.log('Starting spending boss coins');
     botSpendBossCoins = true;
+  }
+}
+
+function botToggleSaveSpears() {
+  if(botSaveSpears) {
+    console.log('Stopping saving spears');
+    botSaveSpears = false;
+  } else {
+    console.log('Starting saving spears');
+    botSaveSpears = true;
   }
 }
 
@@ -504,6 +528,7 @@ function botHelp() {
   console.log('btr(): Toggle the random boss.');
   console.log('btc(): Toggle the chat clear.');
   console.log('btb(): Toggle boss coins spending.');
+  console.log('bta(): Toggle saving of spears.');
   console.log('bst("username"): Set a target to raid every 5 minutes.');
   console.log('bct(): Clear the raid target.');
 }
@@ -517,5 +542,6 @@ function btg() { botToggleGlobal(); }
 function btr() { botToggleRandom(); }
 function btc() { botToggleChatClear(); }
 function btb() { botToggleBossCoins(); }
+function bta() { botToggleSaveSpears(); }
 function bst(username) { botSetTarget(username); }
 function bct() { botClearTarget(); }
