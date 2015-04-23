@@ -1,5 +1,3 @@
-<h2>Index</h2>
-
 <table class="table table-striped table-hover table-bordered table-condensed">
   <thead>
     <tr>
@@ -17,7 +15,7 @@
       <td style="<%= player_style(raid.defender) %>"><%= raid.defender %></td>
       <td class="text-right"><%= readable_number(raid.soldiers) %></td>
       <td class="text-right"><%= readable_number(raid.money) %></td>
-      <td class="text0right"><%= raid.created_at.strftime('%H:%M on %m-%d-%Y') %></td>
+      <td class="text-right"><%= raid.created_at.strftime('%H:%M on %m-%d-%Y') %></td>
     </tr>
   <% end %>
   </tbody>

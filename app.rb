@@ -27,7 +27,15 @@ end
 
 #HELPERS
 def player_style(player)
-  'background-color:green;color:white;font-weight: bold' if ['greggnic','mafiaman','atomaka'].include?(player)
+  "background-color:#{players[player]};font-weight: bold" if players.keys.include?(player)
+end
+
+def players
+  {
+    'greggnic' => '#dff0d8',
+    'atomaka' => '#d9edf7',
+    'mafiaman' => '#f2dede'
+  }
 end
 
 def readable_number(value)
