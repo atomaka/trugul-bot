@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'json'
+require 'mechanize'
+require 'nokogiri'
 require './environments'
 
 set :public_folder, 'public'
@@ -8,6 +10,16 @@ set :public_folder, 'public'
 # CONTROLLER
 get '/' do
   @raids = Raid.all.reverse
+
+  mechanize = Mechanize.new
+  page = mechanize.get('http://trugul.com/highscores')
+# //div[@id='allEdition']/table//tr/td/span[@class='symbol']/a"
+  highscores = page.search "//table[@id='highscores_table']//tr[@class='clickable']/td[2]"
+  @top20 = []
+  highscores.each do |td_user|
+    @top20 << td_user.text.strip
+  end
+
   erb :index
 end
 

@@ -8,6 +8,7 @@ gem 'sinatra-flash'
 gem 'sinatra-redirect-with-flash'
 gem 'rake'
 gem 'json'
+gem 'mechanize'
 
 group :production do
   gem 'pg'
