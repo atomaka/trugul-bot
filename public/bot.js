@@ -172,13 +172,17 @@ function activateBuffs() {
   $('div[name="items_holder"]').children().each(function() {
     var itemHolder = $(this);
 
-    if(itemHolder.attr('item') != 'godspear_fragment' || botSaveSpears === false) {
+    if(itemHolder.attr('item') != 'godspear_fragment' || botSaveSpears === false || haveMaxItems()) {
       var itemButton = itemHolder.find('button:contains("Activate")');
       if(itemButton.length > 0) {
         itemButton.get(0).click()
       }
     }
   });
+}
+
+function haveMaxItems() {
+  return $('span[name="item_count"').text() == '20/20';
 }
 
 function setBotToPurchasing() {
