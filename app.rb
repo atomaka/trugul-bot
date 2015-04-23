@@ -13,12 +13,26 @@ get '/' do
 
   mechanize = Mechanize.new
   page = mechanize.get('http://trugul.com/highscores')
-# //div[@id='allEdition']/table//tr/td/span[@class='symbol']/a"
   highscores = page.search "//table[@id='highscores_table']//tr[@class='clickable']/td[2]"
-  @top20 = []
+
+  require 'pp'
+  @top20 = {}
   highscores.each do |td_user|
-    @top20 << td_user.text.strip
+    user = td_user.text.scan(/[A-Za-z]+/)
+    @top20[user.first] = nil
   end
+
+  @top20.keys.each do |top20|
+    @raids.each do |raid|
+      if raid.attacker == top20 || raid.defender == top20
+        @top20[top20] = raid.created_at
+        break
+      end
+    end
+  end
+
+  # get last attack for each
+  # order by date
 
   erb :index
 end
