@@ -18,7 +18,7 @@ get '/' do
   require 'pp'
   @top20 = {}
   highscores.each do |td_user|
-    user = td_user.text.scan(/[A-Za-z]+/)
+    user = td_user.text.scan(/[A-Za-z0-9]+/)
     @top20[user.first] = nil
   end
 
