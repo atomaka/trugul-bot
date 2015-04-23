@@ -26,6 +26,10 @@ post '/' do
 end
 
 #HELPERS
+def player_style(player)
+  'background-color:green;color:white;font-weight: bold' if ['greggnic','mafiaman','atomaka'].include?(player)
+end
+
 def readable_number(value)
   numbers.each do |number, symbol|
     if value.to_f / number.to_f > 1

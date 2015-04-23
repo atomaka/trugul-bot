@@ -13,11 +13,11 @@
   <tbody>
   <% @raids.each do |raid| %>
     <tr>
-      <td><%= raid.attacker %></td>
-      <td><%= raid.defender %></td>
+      <td style="<%= player_style(raid.attacker) %>"><%= raid.attacker %></td>
+      <td style="<%= player_style(raid.attacker) %>"><%= raid.defender %></td>
       <td class="text-right"><%= readable_number(raid.soldiers) %></td>
       <td class="text-right"><%= readable_number(raid.money) %></td>
-      <td><%= raid.created_at %></td>
+      <td class="text0right"><%= raid.created_at.strftime('%H:%M on %m-%d-%Y') %></td>
     </tr>
   <% end %>
   </tbody>
