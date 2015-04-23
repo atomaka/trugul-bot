@@ -16,20 +16,22 @@ get '/' do
   highscores = page.search "//table[@id='highscores_table']//tr[@class='clickable']/td[2]"
 
   require 'pp'
-  @top20 = {}
+  @top20 = []
   highscores.each do |td_user|
     user = td_user.text.scan(/[A-Za-z0-9]+/)
-    @top20[user.first] = nil
+    @top20 << { user: user.first, date: nil }
   end
 
-  @top20.keys.each do |top20|
+  @top20.each_with_index do |hash, i|
     @raids.each do |raid|
-      if raid.attacker == top20 || raid.defender == top20
-        @top20[top20] = raid.created_at
+      if raid.attacker == hash[:user] || raid.defender == hash[:user]
+        @top20[i][:date] = raid.created_at
         break
       end
     end
   end
+
+  @top20 = @top20.select { |h| h[:date] }.sort_by { |h| h[:date] } + @top20.reject { |h| h[:date] }
 
   # get last attack for each
   # order by date
