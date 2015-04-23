@@ -182,7 +182,7 @@ function activateBuffs() {
 }
 
 function haveMaxItems() {
-  return $('span[name="item_count"').text() == '20/20';
+  return convertToNumber($('span[name="item_count"').text().split('/')[0]) >= 17;
 }
 
 function setBotToPurchasing() {
