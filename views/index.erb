@@ -1,6 +1,6 @@
 <h2>Index</h2>
 
-<table class="table table-striped">
+<table class="table table-striped table-hover table-bordered table-condensed">
   <thead>
     <tr>
       <td>Attacker</td>
@@ -15,8 +15,8 @@
     <tr>
       <td><%= raid.attacker %></td>
       <td><%= raid.defender %></td>
-      <td><%= readable_number(raid.soldiers) %></td>
-      <td><%= readable_number(raid.money) %></td>
+      <td class="text-right"><%= readable_number(raid.soldiers) %></td>
+      <td class="text-right"><%= readable_number(raid.money) %></td>
       <td><%= raid.created_at %></td>
     </tr>
   <% end %>

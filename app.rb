@@ -29,11 +29,12 @@ end
 def readable_number(value)
   numbers.each do |number, symbol|
     if value.to_f / number.to_f > 1
-      return (value.to_f / number.to_f).round(2).to_s + '<strong>' + symbol + '</strong>'
+      return sprintf('%.2f', value.to_f / number.to_f) + '<strong>' + symbol + '</strong>'
     end
   end
 
-  return value
+  value = 0.0 unless value
+  return sprintf('%.2f', value) + "_"
 end
 
 def numbers
