@@ -27,7 +27,7 @@ end
 
 #HELPERS
 def player_style(player)
-  "background-color:#{players[player]};font-weight: bold" if players.keys.include?(player)
+  "color:#{players[player]};font-weight: bold" if players.keys.include?(player)
 end
 
 def players
