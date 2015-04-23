@@ -29,7 +29,7 @@ end
 def readable_number(value)
   numbers.each do |number, symbol|
     if value.to_f / number.to_f > 1
-      return (value.to_f / number.to_f).round(2).to_s + symbol
+      return (value.to_f / number.to_f).round(2).to_s + '<strong>' + symbol + '</strong>'
     end
   end
 
