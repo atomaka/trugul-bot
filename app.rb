@@ -32,9 +32,9 @@ end
 
 def players
   {
-    'greggnic' => '#dff0d8',
-    'atomaka' => '#d9edf7',
-    'mafiaman' => '#f2dede'
+    'greggnic' => '#3c763d',
+    'atomaka' => '#31708f',
+    'mafiaman' => '#a94442'
   }
 end
 
