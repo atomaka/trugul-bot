@@ -26,6 +26,6 @@
 <div class="col-md-3">
   <ul class="list-group">
     <% @top20.each do |user| %>
-      <li class="list-group-item"><%= user[:user] %><span class="pull-right"><%= user[:date].strftime('%H:%M on %m-%d-%Y') if user[:date] %></li>
+      <li class="list-group-item"><%= user[:user] %><span class="pull-right"><small><%= user[:date].strftime('%H:%M on %m-%d-%Y') if user[:date] %></small></li>
     <% end %>
 </div>
