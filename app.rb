@@ -69,7 +69,7 @@ end
 def readable_number(value)
   negative = false
 
-  negative = true if value =~ /\-/
+  #negative = true if value =~ /\-/
   value.gsub!(/\-/, '')
   numbers.each do |number, symbol|
     if value.to_f / number.to_f > 1
