@@ -70,7 +70,7 @@ def readable_number(value)
   negative = false
 
   negative = true if value.to_f < 0
-  value.gsub!(/-/, '')
+  value = value * -1
   numbers.each do |number, symbol|
     if value.to_f / number.to_f > 1
       return sprintf('%.2f', value.to_f / number.to_f) + '<strong>' + symbol + '</strong>'
