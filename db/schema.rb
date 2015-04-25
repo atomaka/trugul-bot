@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415152327) do
+ActiveRecord::Schema.define(version: 20150425172329) do
+
+  create_table "leaders", force: :cascade do |t|
+    t.string   "leader"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "raids", force: :cascade do |t|
     t.string   "attacker"

@@ -5,22 +5,24 @@ require 'mechanize'
 require 'nokogiri'
 require './environments'
 
+require './models/raid'
+require './models/leader'
+require './helpers/raids_helper'
+require './jobs/leaders'
+
 set :public_folder, 'public'
 
 # CONTROLLER
 get '/' do
   @raids = Raid.all.reverse
 
-  mechanize = Mechanize.new
-  page = mechanize.get('http://trugul.com/highscores')
-  highscores = page.search "//table[@id='highscores_table']//tr[@class='clickable']/td[2]"
+  leaders = Leader.all
+  last_update = leaders.first ? leaders.first.created_at : DateTime.new(0)
+  pp last_update
+  pp DateTime.now
+  rebuild_leaders if last_update + 300 < DateTime.now
 
-  require 'pp'
-  @top20 = []
-  highscores.each do |td_user|
-    user = td_user.text.scan(/[A-Za-z0-9]+/)
-    @top20 << { user: user.first, date: nil }
-  end
+  @top20 = leaders.map { |l| { user: l.leader, date: nil } }
 
   @top20.each_with_index do |hash, i|
     @raids.each do |raid|
@@ -32,9 +34,6 @@ get '/' do
   end
 
   @top20 = @top20.select { |h| h[:date] }.sort_by { |h| h[:date] } + @top20.reject { |h| h[:date] }
-
-  # get last attack for each
-  # order by date
 
   erb :index
 end
@@ -50,65 +49,5 @@ post '/' do
   else
     content_type :json
     { :message => 'Raid failed to save' }.to_json
-  end
-end
-
-#HELPERS
-def player_style(player)
-  "color:#{players[player]};font-weight: bold" if players.keys.include?(player)
-end
-
-def players
-  {
-    'greggnic' => '#3c763d',
-    'atomaka' => '#31708f',
-    'mafiaman' => '#a94442'
-  }
-end
-
-def money_style(value)
-  value.to_f < 0 ? 'color:#a94442' : 'color:#3c763d'
-end
-
-def readable_number(value)
-  if value.to_f < 0
-    negative = true
-    value *= -1 if value < 0
-  else
-    negative = false
-  end
-
-  numbers.each do |number, symbol|
-    if value.to_f / number.to_f >= 1
-      new_value = negative ? '-' : ''
-      new_value += sprintf('%.2f', value.to_f / number.to_f) + '<strong>' + symbol + '</strong>'
-      return new_value
-    end
-  end
-
-  value = 0.0 unless value
-  return sprintf('%.2f', value) + "&nbsp;"
-end
-
-def numbers
-  {
-    '1000000000000000' => 'Q',
-    '1000000000000' => 'T',
-    '1000000000' => 'B',
-    '1000000' => 'M',
-    '1000' => 'K'
-  }
-end
-
-# MODEL
-class Raid < ActiveRecord::Base
-  def money=(value)
-    value = value.to_s.gsub(/[$,]/, '').to_f
-    write_attribute(:money, value)
-  end
-
-  def soldiers=(value)
-    value = value.to_s.gsub(/[$,]/, '').to_f
-    write_attribute(:soldiers, value)
   end
 end
