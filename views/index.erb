@@ -15,7 +15,7 @@
         <td style="<%= player_style(raid.attacker) %>"><%= raid.attacker %></td>
         <td style="<%= player_style(raid.defender) %>"><%= raid.defender %></td>
         <td class="text-right"><%= readable_number(raid.soldiers) %></td>
-        <td class="text-right"><%= readable_number(raid.money) %></td>
+        <td class="text-right" style="<%=money_style(raid.money)%>"><%= readable_number(raid.money) %></td>
         <td class="text-right"><%= raid.created_at.strftime('%H:%M on %m-%d-%Y') %></td>
       </tr>
     <% end %>

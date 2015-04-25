@@ -66,6 +66,10 @@ def players
   }
 end
 
+def money_style(value)
+  value.to_f < 0 ? 'color:#a94442' : 'color:#3c763d'
+end
+
 def readable_number(value)
   if value.to_f < 0
     negative = true
@@ -83,7 +87,7 @@ def readable_number(value)
   end
 
   value = 0.0 unless value
-  return sprintf('%.2f', value) + "_"
+  return sprintf('%.2f', value) + "&nbsp;"
 end
 
 def numbers
