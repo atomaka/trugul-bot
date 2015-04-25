@@ -77,7 +77,7 @@ def readable_number(value)
   numbers.each do |number, symbol|
     if value.to_f / number.to_f > 1
       #new_value = '-' if negative
-      new_value += sprintf('%.2f', value.to_f / number.to_f) + '<strong>' + symbol + '</strong>'
+      new_value = sprintf('%.2f', value.to_f / number.to_f) + '<strong>' + symbol + '</strong>'
       return new_value
     end
   end
