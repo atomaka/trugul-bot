@@ -67,14 +67,17 @@ def players
 end
 
 def readable_number(value)
-  #negative = false
+  if value.to_f < 0
+    negative = true
+    value *= -1 if value < 0
+  else
+    negative = false
+  end
 
-  #negative = true if value.to_f < 0
-  #value *= -1 if value < 0
   numbers.each do |number, symbol|
     if value.to_f / number.to_f > 1
-      #new_value = '-' if negative
-      new_value = sprintf('%.2f', value.to_f / number.to_f) + '<strong>' + symbol + '</strong>'
+      new_value = '-' if negative
+      new_value += sprintf('%.2f', value.to_f / number.to_f) + '<strong>' + symbol + '</strong>'
       return new_value
     end
   end
