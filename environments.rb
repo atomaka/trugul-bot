@@ -2,7 +2,9 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 
-register Kaminari::Helpers::SinatraHelpers
+require 'will_paginate'
+require 'will_paginate/active_record'
+include WillPaginate::Sinatra::Helpers
 
 require './models/raid'
 require './models/leader'

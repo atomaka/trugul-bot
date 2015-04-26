@@ -1,19 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    actionpack (4.2.1)
-      actionview (= 4.2.1)
-      activesupport (= 4.2.1)
-      rack (~> 1.6)
-      rack-test (~> 0.6.2)
-      rails-dom-testing (~> 1.0, >= 1.0.5)
-      rails-html-sanitizer (~> 1.0, >= 1.0.1)
-    actionview (4.2.1)
-      activesupport (= 4.2.1)
-      builder (~> 3.1)
-      erubis (~> 2.7.0)
-      rails-dom-testing (~> 1.0, >= 1.0.5)
-      rails-html-sanitizer (~> 1.0, >= 1.0.1)
     activemodel (4.2.1)
       activesupport (= 4.2.1)
       builder (~> 3.1)
@@ -31,21 +18,12 @@ GEM
     builder (3.2.2)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
-    erubis (2.7.0)
     foreman (0.78.0)
       thor (~> 0.19.1)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
-    http_router (0.5.4)
-      rack (>= 1.0.0)
-      url_mount (~> 0.2.1)
     i18n (0.7.0)
     json (1.8.2)
-    kaminari (0.16.3)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
-    loofah (2.0.1)
-      nokogiri (>= 1.5.9)
     mechanize (2.7.3)
       domain_name (~> 0.5, >= 0.5.1)
       http-cookie (~> 1.0)
@@ -63,29 +41,10 @@ GEM
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     ntlm-http (0.1.1)
-    padrino-core (0.9.21)
-      activesupport (>= 3.0.0)
-      http_router (~> 0.5.4)
-      sinatra (>= 1.1.0)
-      thor (>= 0.14.3)
-      tzinfo
-    padrino-helpers (0.9.21)
-      i18n (>= 0.4.1)
-      padrino-core (= 0.9.21)
     pg (0.18.1)
     rack (1.6.0)
     rack-protection (1.5.3)
       rack
-    rack-test (0.6.3)
-      rack (>= 1.0)
-    rails-deprecated_sanitizer (1.0.3)
-      activesupport (>= 4.2.0.alpha)
-    rails-dom-testing (1.0.6)
-      activesupport (>= 4.2.0.beta, < 5.0)
-      nokogiri (~> 1.6.0)
-      rails-deprecated_sanitizer (>= 1.0.1)
-    rails-html-sanitizer (1.0.2)
-      loofah (~> 2.0)
     rake (10.4.2)
     sinatra (1.4.6)
       rack (~> 1.4)
@@ -107,9 +66,10 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
-    url_mount (0.2.1)
-      rack
     webrobots (0.1.1)
+    will_paginate (3.0.7)
+    will_paginate-bootstrap (1.0.1)
+      will_paginate (>= 3.0.3)
 
 PLATFORMS
   ruby
@@ -118,9 +78,7 @@ DEPENDENCIES
   activerecord
   foreman
   json
-  kaminari
   mechanize
-  padrino-helpers
   pg
   rake
   sinatra
@@ -128,3 +86,5 @@ DEPENDENCIES
   sinatra-flash
   sinatra-redirect-with-flash
   sqlite3
+  will_paginate (~> 3.0.5)
+  will_paginate-bootstrap

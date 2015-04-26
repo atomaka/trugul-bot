@@ -9,8 +9,8 @@ gem 'sinatra-redirect-with-flash'
 gem 'rake'
 gem 'json'
 gem 'mechanize'
-gem 'padrino-helpers'
-gem 'kaminari', :require => 'kaminari/sinatra'
+gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate-bootstrap'
 
 group :production do
   gem 'pg'

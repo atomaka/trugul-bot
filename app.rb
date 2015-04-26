@@ -1,10 +1,5 @@
 require './environments'
 
-require './models/raid'
-require './models/leader'
-require './helpers/raids_helper'
-require './jobs/leaders'
-
 set :public_folder, 'public'
 
 # CONTROLLER

@@ -1,4 +1,8 @@
 <div class="col-md-9">
+  <div class="pull-right">
+    <%= will_paginate @raids, renderer: BootstrapPagination::Sinatra %>
+  </div>
+
   <table class="table table-striped table-hover table-bordered table-condensed">
     <thead>
       <tr>
@@ -22,10 +26,14 @@
     </tbody>
   </table>
 
-  <%= paginate @raids %>
+  <div>
+    <%= will_paginate @raids, renderer: BootstrapPagination::Sinatra %>
+  </div>
 </div>
 
 <div class="col-md-3">
+  <h2>Top 20</h2>
+  <br/><br/>
   <ul class="list-group">
     <% @top20.each do |user| %>
       <li class="list-group-item"><%= user[:user] %><span class="pull-right"><small><%= user[:date].strftime('%H:%M on %m-%d-%Y') if user[:date] %></small></li>
