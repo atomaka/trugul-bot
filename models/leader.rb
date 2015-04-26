@@ -1,6 +1,6 @@
 class Leader < ActiveRecord::Base
-  has_one :last_attack, foreign_key: :attacker, primary_key: :leader, class_name: 'Raid'
-  has_one :last_defense, foreign_key: :defender, primary_key: :leader, class_name: 'Raid'
+  has_one :last_attack, -> { order created_at: :desc }, foreign_key: :attacker, primary_key: :leader, class_name: 'Raid'
+  has_one :last_defense, -> { order created_at: :desc }, foreign_key: :defender, primary_key: :leader, class_name: 'Raid'
 
   def last_action
     if last_attack == nil && last_defense == nil
