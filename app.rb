@@ -7,20 +7,12 @@ get '/' do
   @raids = Raid.order('created_at DESC').page(params[:page])
   leaders = Leader.all
   last_update = leaders.first ? leaders.first.created_at : DateTime.new(0)
-  rebuild_leaders if last_update + 300 < DateTime.now
-
-  @top20 = leaders.map { |l| { user: l.leader, date: nil } }
-
-  @top20.each_with_index do |hash, i|
-    @raids.each do |raid|
-      if raid.attacker == hash[:user] || raid.defender == hash[:user]
-        @top20[i][:date] = raid.created_at
-        break
-      end
-    end
+  if last_update + 300 < DateTime.now
+    rebuild_leaders
   end
 
-  @top20 = @top20.select { |h| h[:date] }.sort_by { |h| h[:date] } + @top20.reject { |h| h[:date] }
+  leaders = Leader.all.includes(:last_attack, :last_defense)
+  @top20 = leaders.select { |l| l.last_action }.sort_by { |l| l.last_action } + leaders.reject { |l| l.last_action }
 
   erb :index
 end

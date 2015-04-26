@@ -34,7 +34,7 @@
 <div class="col-md-3">
   <div class="well well-lg text-center"><strong><%= Time.now.utc.strftime('%H:%M on %m-%d-%Y') %></strong></div>
   <ul class="list-group">
-    <% @top20.each do |user| %>
-      <li class="list-group-item"><%= user[:user] %><span class="pull-right"><small><%= user[:date].strftime('%H:%M on %m-%d-%Y') if user[:date] %></small></li>
+    <% @top20.each do |leader| %>
+      <li class="list-group-item"><%= leader.leader %><span class="pull-right"><small><%= leader.last_action.strftime('%H:%M on %m-%d-%Y') if leader.last_action %></small></li>
     <% end %>
 </div>
