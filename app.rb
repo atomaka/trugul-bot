@@ -12,7 +12,7 @@ get '/' do
   end
 
   leaders = Leader.all.includes(:last_attack, :last_defense)
-  @top20 = leaders.reject { |l| l.last_action } + leaders.select { |l| l.last_action }.sort_by { |l| l.last_action }.reverse
+  @top20 = leaders.reject { |l| l.last_action } + leaders.select { |l| l.last_action }.sort_by { |l| l.last_action }
 
   erb :index
 end
