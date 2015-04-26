@@ -1,8 +1,6 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'json'
-require 'mechanize'
-require 'nokogiri'
 require './environments'
 
 require './models/raid'
@@ -18,8 +16,6 @@ get '/' do
 
   leaders = Leader.all
   last_update = leaders.first ? leaders.first.created_at : DateTime.new(0)
-  pp last_update
-  pp DateTime.now
   rebuild_leaders if last_update + 300 < DateTime.now
 
   @top20 = leaders.map { |l| { user: l.leader, date: nil } }
