@@ -1,8 +1,4 @@
-require 'sinatra/activerecord'
-require 'mechanize'
-require 'nokogiri'
-
-require './models/leader'
+require './environments'
 
 def rebuild_leaders
   puts "rebuilding_leaders called"

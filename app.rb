@@ -1,6 +1,3 @@
-require 'sinatra'
-require 'sinatra/activerecord'
-require 'json'
 require './environments'
 
 require './models/raid'
@@ -12,8 +9,7 @@ set :public_folder, 'public'
 
 # CONTROLLER
 get '/' do
-  @raids = Raid.all.reverse
-
+  @raids = Raid.order('created_at DESC').page(params[:page])
   leaders = Leader.all
   last_update = leaders.first ? leaders.first.created_at : DateTime.new(0)
   rebuild_leaders if last_update + 300 < DateTime.now
