@@ -36,7 +36,13 @@ get '/bossfight' do
   user_raids = Raid.for_user(@username)
   @first_negative = user_raids.first_negative
   @soldiers_killed = user_raids.soldiers_lost_to_date(@first_negative.created_at)
-  @contributers = user_raids.contributors(@first_negative.created_at)
+  @contributor_attacks = user_raids.contributor_attacks(@first_negative.created_at)
+  @contributor_soldiers = user_raids.contributor_soldiers(@first_negative.created_at)
+
+  @contributors = []
+  @contributor_attacks.each do |k, v|
+    @contributors << { username: k, attacks: v, lost: @contributor_soldiers[k] }
+  end
 
   erb :bossfight
 end

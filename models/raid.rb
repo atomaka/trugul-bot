@@ -21,7 +21,11 @@ class Raid < ActiveRecord::Base
     where('created_at <= ?', date).sum(:soldiers)
   end
 
-  def self.contributors(date)
+  def self.contributor_attacks(date)
+    where('created_at <= ?', date).group(:attacker).count(:id)
+  end
+
+  def self.contributor_soldiers(date)
     where('created_at <= ?', date).group(:attacker).sum(:soldiers)
   end
 end

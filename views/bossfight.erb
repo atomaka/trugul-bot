@@ -29,11 +29,11 @@
       </tr>
     </thead>
     <tbody>
-    <% @contributers.each do |contributer| %>
+    <% @contributors.each do |contributor| %>
       <tr>
-        <td><%= contributer[0]%></td>
-        <td></td>
-        <td><%= readable_number(contributer[1]) %></td>
+        <td><%= contributor[:username] %></td>
+        <td class="text-right"><%= contributor[:attacks] %></td>
+        <td class="text-right"><%= readable_number(contributor[:lost]) %></td>
       </tr>
     <% end %>
     </tbody>
