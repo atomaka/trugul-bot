@@ -30,3 +30,18 @@ post '/' do
     { :message => 'Raid failed to save' }.to_json
   end
 end
+
+get '/bossfight' do
+  puts "RAIDS FOR MAFIAMAN"
+  user_raids = Raid.for_user('mafiaman')
+  puts "FIRST NEGATIVE"
+  @first_negative = user_raids.first_negative
+  unless @first_negative == nil
+    puts "SOLDIERS LOST"
+    @soldiers_lost_to_date = user_raids.to_date(@first_negative.created_at).soldiers_lost
+    puts "SOLDIERS BY ATTACKER"
+    @soldiers_by_attacker = user_raids.to-date(@first_negative.created_at).by_attacker.soldiers_lost
+  end
+
+  erb :bossfight
+end

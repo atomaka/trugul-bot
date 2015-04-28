@@ -1,0 +1,15 @@
+<% if @first_negative %>
+  Raider who broke the walls: <%= @first_negative.attacker %><br/>
+<%end%>
+
+<% if @soldiers_lost_to_date %>
+  Soldiers defeated: <%= @soldiers_lost_to_date %><br/>
+<%end%>
+
+<% require 'pp' %>
+<% if @soldiers_by_attacker %>
+Participants:
+<% @soldiers_by_attacker.each do |raid| %>
+  <% pp raid %>
+<%end%>
+  <%end%>
