@@ -6,11 +6,11 @@
     </li>
     <li class="list-group-item text-right">
       <span class="pull-left"><strong>Kill Date:</strong></span>
-      <%= @first_negative.created_at.strftime('%H:%M on %m-%d-%Y') if @first_negative %>
+      <%= @kill_date.strftime('%H:%M on %m-%d-%Y') if @kill_date %>
     </li>
     <li class="list-group-item text-right">
       <span class="pull-left"><strong>Killing Blow:</strong></span>
-      <%= @first_negative.attacker if @first_negative %>
+      <%= @kill_user if @kill_user %>
     </li>
     <li class="list-group-item text-right">
       <span class="pull-left"><strong>Soliders Killed:</strong></span>

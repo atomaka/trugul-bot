@@ -36,14 +36,17 @@ get '/bossfight' do
   user_defenses = Raid.defenses_for_user(@username)
   user_attacks = Raid.attacks_for_user(@username)
 
-  @first_negative = user_defenses.first_negative
-  @soldiers_killed = user_defenses.soldiers_lost_to_date(@first_negative.created_at)
+  first_negative = user_defenses.first_negative
+  @kill_date = first_negative ? first_negative.created_at : DateTime.now
+  @kill_user = first_negative ? first_negative.attacker : '<strong>UNKILLED</strong>'
 
-  @contributor_attacks = user_defenses.contributor_attacks(@first_negative.created_at)
-  @contributor_soldiers = user_defenses.contributor_soldiers(@first_negative.created_at)
+  @soldiers_killed = user_defenses.soldiers_lost_to_date(@kill_date)
 
-  @contributor_defenses = user_attacks.contributor_defenses(@first_negative.created_at)
-  @contributor_defenders = user_attacks.contributor_defenders(@first_negative.created_at)
+  @contributor_attacks = user_defenses.contributor_attacks(@kill_date)
+  @contributor_soldiers = user_defenses.contributor_soldiers(@kill_date)
+
+  @contributor_defenses = user_attacks.contributor_defenses(@kill_date)
+  @contributor_defenders = user_attacks.contributor_defenders(@kill_date)
 
   @contributors = []
   @contributor_attacks.each do |k, v|
