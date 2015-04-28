@@ -32,7 +32,7 @@ post '/' do
 end
 
 get '/bossfight/?:username' do
-  @username = params['username'] ? params['username'] : 'mafiaman'
+  @username = params['username'] != '' ? params['username'] : 'mafiaman'
   user_raids = Raid.for_user(@username)
   @first_negative = user_raids.first_negative
   @soldiers_killed = user_raids.soldiers_lost_to_date(@first_negative.created_at)
