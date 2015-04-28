@@ -16,4 +16,8 @@ class Raid < ActiveRecord::Base
   def self.first_negative
     where('money < 0').order(:created_at).first
   end
+
+  def self.soldiers_lost_to_date(date)
+    where('date < ?', date).sum(:soldiers)
+  end
 end

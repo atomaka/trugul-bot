@@ -1,3 +1,9 @@
+<h2>Bossfight: <%= @username %></h2>
+
 <% if @first_negative %>
   Raider who broke the walls: <%= @first_negative.attacker %><br/>
 <%end%>
+
+<% if @soldiers_lost_to_date %>
+  Soliders killed before walls broken: <%= @soldiers_lost_to_date %>
+<% end %>
