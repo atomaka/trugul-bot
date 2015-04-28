@@ -1,17 +1,20 @@
-<h2>Bossfight: <%= @username %></h2>
-
 <div class="col-md-3">
   <ul class="list-group">
     <li class="list-group-item text-right">
+      <span class="pull-left"><strong>Target:</strong></span>
+      <%= @username %>
+    </li>
+    <li class="list-group-item text-right">
       <span class="pull-left"><strong>Kill Date:</strong></span>
       <%= @first_negative.created_at.strftime('%H:%M on %m-%d-%Y') if @first_negative %>
+    </li>
     <li class="list-group-item text-right">
       <span class="pull-left"><strong>Killing Blow:</strong></span>
       <%= @first_negative.attacker if @first_negative %>
     </li>
     <li class="list-group-item text-right">
       <span class="pull-left"><strong>Soliders Killed:</strong></span>
-      <%= readable_number(@soldiers_lost_to_date) if @soliders_lost_to_date %>
+      <%= readable_number(@soldiers_killed) if @soldiers_killed %>
     </li>
   </ul>
 </div>

@@ -35,7 +35,7 @@ get '/bossfight/?:username' do
   @username = params['username'] ? params['username'] : 'mafiaman'
   user_raids = Raid.for_user(@username)
   @first_negative = user_raids.first_negative
-  @soldiers_lost_to_date = user_raids.soldiers_lost_to_date(@first_negative.created_at)
+  @soldiers_killed = user_raids.soldiers_lost_to_date(@first_negative.created_at)
   @contributers = user_raids.contributors(@first_negative.created_at)
 
   erb :bossfight
