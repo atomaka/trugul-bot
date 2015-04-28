@@ -1,12 +1,22 @@
 <h2>Bossfight: <%= @username %></h2>
 
-<% if @first_negative %>
-  Raider who broke the walls: <%= @first_negative.attacker %><br/>
-<%end%>
+<div class="col-md-3">
+  <ul class="list-group">
+    <li class="list-group-item text-right">
+      <span class="pull-left"><strong>Kill Date:</strong></span>
+      <%= @first_negative.created_at if @first_negative %>
+    <li class="list-group-item text-right">
+      <span class="pull-left"><strong>Killing Blow:</strong></span>
+      <%= @first_negative.attacker if @first_negative %>
+    </li>
+    <li class="list-group-item text-right">
+      <span class="pull-left"><strong>Soliders Killed:</strong></span>
+      <%= readable_number(@soldiers_lost_to_date) if @soliders_lost_to_date %>
+    </li>
+  </ul>
+</div>
 
-<% if @soldiers_lost_to_date %>
-  Soliders killed before walls broken: <%= readable_number(@soldiers_lost_to_date) %>
-<% end %>
-
+<div class="col-md-12">
 <% require 'pp' %>
 <% pp @contributers %>
+</div>
