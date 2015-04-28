@@ -58,5 +58,7 @@ get '/bossfight' do
                      }
   end
 
+  @contributors = @contributors.sort_by { |c| c[:lost] }.reverse
+
   erb :bossfight
 end
