@@ -20,4 +20,8 @@ class Raid < ActiveRecord::Base
   def self.soldiers_lost_to_date(date)
     where('created_at < ?', date).sum(:soldiers)
   end
+
+  def self.contributers(date)
+    where('created_at < ?', date).group(:attacker).sum(:soldiers)
+  end
 end
