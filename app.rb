@@ -51,12 +51,13 @@ get '/bossfight' do
   @contributors = []
   @contributor_attacks.each do |k, v|
     attacks = @contributor_attacks[k] || 0
-    attacks += @contributor_defenses[k] if @contributor_defenses[k]
+    defenses = @contributor_defenses[k] || 0
     lost = @contributor_soldiers[k] || 0
     lost += @contributor_defenders[k] if @contributor_defenders[k]
     @contributors << {
                        username: k,
                        attacks: attacks,
+                       defenses: defenses,
                        lost: lost
                      }
   end

@@ -24,7 +24,8 @@
     <thead>
       <tr>
         <td>Attacker</td>
-        <td>Attempts</td>
+        <td>Attacks</td>
+        <td>Defenses</td>
         <td>Soldiers Killed</td>
       </tr>
     </thead>
@@ -33,6 +34,7 @@
       <tr>
         <td><%= contributor[:username] %></td>
         <td class="text-right"><%= contributor[:attacks] %></td>
+        <td class="text-right"><%= contributor[:defenses] %></td>
         <td class="text-right"><%= readable_number(contributor[:lost]) %></td>
       </tr>
     <% end %>
