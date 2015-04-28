@@ -31,8 +31,9 @@ post '/' do
   end
 end
 
-get '/bossfight' do
-  user_raids = Raid.for_user('mafiaman')
+get '/bossfight/:username' do
+  username = params['username'] ? params['username'] : 'mafiaman'
+  user_raids = Raid.for_user(username)
   @first_negative = user_raids.first_negative
 
   erb :bossfight
