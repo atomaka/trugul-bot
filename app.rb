@@ -41,6 +41,7 @@ get '/bossfight' do
   @kill_user = first_negative ? first_negative.attacker : '<strong>UNKILLED</strong>'
 
   @soldiers_killed = user_defenses.soldiers_lost_to_date(@kill_date)
+  @soldiers_killed += user_attacks.soldiers_lost_to_date(@kill_date)
 
   @contributor_attacks = user_defenses.contributor_attacks(@kill_date)
   @contributor_soldiers = user_defenses.contributor_soldiers(@kill_date)
