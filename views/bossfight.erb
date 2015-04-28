@@ -5,5 +5,5 @@
 <%end%>
 
 <% if @soldiers_lost_to_date %>
-  Soliders killed before walls broken: <%= @soldiers_lost_to_date %>
+  Soliders killed before walls broken: <%= readable_number(@soldiers_lost_to_date) %>
 <% end %>
