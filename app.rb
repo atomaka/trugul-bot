@@ -33,15 +33,29 @@ end
 
 get '/bossfight' do
   @username = params['username'] ? params['username'] : 'mafiaman'
-  user_raids = Raid.for_user(@username)
-  @first_negative = user_raids.first_negative
-  @soldiers_killed = user_raids.soldiers_lost_to_date(@first_negative.created_at)
-  @contributor_attacks = user_raids.contributor_attacks(@first_negative.created_at)
-  @contributor_soldiers = user_raids.contributor_soldiers(@first_negative.created_at)
+  user_defenses = Raid.defenses_for_user(@username)
+  user_attacks = Raid.attacks_for_user(@username)
+
+  @first_negative = user_defenses.first_negative
+  @soldiers_killed = user_defenses.soldiers_lost_to_date(@first_negative.created_at)
+
+  @contributor_attacks = user_defenses.contributor_attacks(@first_negative.created_at)
+  @contributor_soldiers = user_defenses.contributor_soldiers(@first_negative.created_at)
+
+  @contributor_defenses = user_attacks.contributor_defenses(@first_negative.created_at)
+  @contributor_defenders = user_attacks.contributor_defenders(@first_negative.created_at)
 
   @contributors = []
   @contributor_attacks.each do |k, v|
-    @contributors << { username: k, attacks: v, lost: @contributor_soldiers[k] }
+    attacks = @contributor_attacks[k] || 0
+    attacks += @contributor_defenses[k] if @contributor_defenses[k]
+    lost = @contributor_soldiers[k] || 0
+    lost += @contributor_defenders[k] if @contributor_defenders[k]
+    @contributors << {
+                       username: k,
+                       attacks: attacks,
+                       lost: lost
+                     }
   end
 
   erb :bossfight

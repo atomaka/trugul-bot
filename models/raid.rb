@@ -9,8 +9,12 @@ class Raid < ActiveRecord::Base
     write_attribute(:soldiers, value)
   end
 
-  def self.for_user(username)
+  def self.defenses_for_user(username)
     where('defender = ?', username)
+  end
+
+  def self.attacks_for_user(username)
+    where('attacker = ?', username)
   end
 
   def self.first_negative
@@ -25,7 +29,15 @@ class Raid < ActiveRecord::Base
     where('created_at <= ?', date).group(:attacker).count(:id)
   end
 
+  def self.contributor_defenses(date)
+    where('created_at <= ?', date).group(:defender).count(:id)
+  end
+
   def self.contributor_soldiers(date)
     where('created_at <= ?', date).group(:attacker).sum(:soldiers)
+  end
+
+  def self.contributor_defenders(date)
+    where('created_at <= ?', date).group(:defender).sum(:soldiers)
   end
 end
