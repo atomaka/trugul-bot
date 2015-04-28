@@ -14,6 +14,9 @@ get '/' do
   leaders = Leader.all.includes(:last_attack, :last_defense)
   @top20 = leaders.reject { |l| l.last_action } + leaders.select { |l| l.last_action }.sort_by { |l| l.last_action }
 
+  # temp cleanup
+  Raid.where('attacker = ? AND defender = ?', 'atomaka', 'mafiaman').destroy
+
   erb :index
 end
 
