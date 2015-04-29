@@ -18,17 +18,19 @@ get '/' do
 end
 
 post '/' do
-  response['Access-Control-Allow-Origin'] = 'http://trugul.com'
+  #response['Access-Control-Allow-Origin'] = 'http://trugul.com'
 
-  @raid = Raid.new(params[:raid])
+  #@raid = Raid.new(params[:raid])
 
-  if @raid.save
-    content_type :json
-    { :message => 'Raid saved' }.to_json
-  else
-    content_type :json
-    { :message => 'Raid failed to save' }.to_json
-  end
+  #if @raid.save
+  #  content_type :json
+  #  { :message => 'Raid saved' }.to_json
+  #else
+  #  content_type :json
+  #  { :message => 'Raid failed to save' }.to_json
+  #end
+  content_type :json
+  { :message => 'Raid saving no longer available' }.to_json
 end
 
 get '/bossfight' do
