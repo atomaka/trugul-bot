@@ -350,7 +350,11 @@ function haveTrillions(number) {
 }
 
 function convertToNumber(string) {
-  return Number(string.replace(/[^0-9\.]+/g, ''));
+  if(string.indexOf('M') > -1) {
+    return Number(string.replace(/[^0-9\.]+/g, '')) * 1000000;
+  } else {
+    return Number(string.replace(/[^0-9\.]+/g, ''));
+  }
 }
 
 function trillions(number) {
