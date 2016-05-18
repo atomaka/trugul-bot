@@ -5,6 +5,7 @@ var SAFE_SOLDIER_COUNT = 200000;
 
 var botLoop;
 var botGlobalBossTimer;
+var botPurchasingTimer;
 var botPaused = true;
 var botPurchasing = false;
 var botSleeping = false;
@@ -98,8 +99,10 @@ function mainLoop() {
     if(haveSlimes(SAFE_SOLDIER_COUNT) === false && botFightRandom === true && botPurchasing === false) {
       setBotToPurchasing();
       clickSelector('button[name="buyx-knight"]');
-      botFillIn('input[name="x_amount"]', SAFE_SOLDIER_COUNT);
-      clickButton("Buy");
+      botPurchasingTimer = setInterval(function() {
+        botFillIn('input[name="x_amount"]', SAFE_SOLDIER_COUNT);
+        clickButton("Buy");
+      }, 250);
     }
 
     if(haveCreepers(SAFE_SOLDIER_COUNT) === false && botFightRandom === true && botPurchasing === false) {
