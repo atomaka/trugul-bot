@@ -1,7 +1,7 @@
 var BOT_WORKER_MONEY = 0.0001;
 var BOT_SLIME_MONEY = 0.0001;
 var CHAT_LIMIT = 150;
-var SAFE_SOLDIER_COUNT = 200000;
+var SAFE_SOLDIER_COUNT = 20000000;
 
 var botLoop;
 var botGlobalBossTimer;
