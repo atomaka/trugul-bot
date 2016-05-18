@@ -1,7 +1,7 @@
-var BOT_WORKER_MONEY = 0.0001;
-var BOT_SLIME_MONEY = 0.0001;
+var BOT_WORKER_MONEY = 0.01;
+var BOT_SLIME_MONEY = .01;
 var CHAT_LIMIT = 150;
-var SAFE_SOLDIER_COUNT = 8000000;
+var SAFE_SOLDIER_COUNT = 10000000;
 
 var botLoop;
 var botGlobalBossTimer;
@@ -175,10 +175,12 @@ function activateBuffs() {
   $('div[name="items_holder"]').children().each(function() {
     var itemHolder = $(this);
 
-    if(itemHolder.attr('item') != 'godspear_fragment' || botSaveSpears === false || haveMaxItems()) {
-      var itemButton = itemHolder.find('button:contains("Activate")');
-      if(itemButton.length > 0) {
-        itemButton.get(0).click()
+    if(itemHolder.attr('item') != 'map') {
+      if(itemHolder.attr('item') != 'godspear_fragment' || botSaveSpears === false || haveMaxItems()) {
+        var itemButton = itemHolder.find('button:contains("Activate")');
+        if(itemButton.length > 0) {
+          itemButton.get(0).click()
+        }
       }
     }
   });
@@ -218,20 +220,7 @@ function haveMaxWorker(type) {
 }
 
 function botDetectUser() {
-  var guests = $('#player-list div.no-icon span.username-holder');
-  var randomGuest = $(guests[Math.floor(Math.random() * guests.length)]).text();
-
-  $('#chatbox').bind('DOMSubtreeModified', function() {
-    var lastMessage = $(this).find('.chat-message').last();
-    if(lastMessage.find('.chat-pm').text() == 'PM -> ' + randomGuest) {
-      botUser = lastMessage.find('.username').text().trim();
-      console.log('Setting bot user to ' + botUser);
-      $('#chatbox').unbind('DOMSubtreeModified');
-      chatMonitor();
-    }
-  });
-
-  botSendChat('/pm ' + randomGuest + ' hello!');
+  botUser = $('#playerName').text();
 }
 
 function botSendChat(message) {
