@@ -1,7 +1,7 @@
 var BOT_WORKER_MONEY = 0.0001;
 var BOT_SLIME_MONEY = 0.0001;
 var CHAT_LIMIT = 150;
-var SAFE_SOLDIER_COUNT = 20000000;
+var SAFE_SOLDIER_COUNT = 8000000;
 
 var botLoop;
 var botGlobalBossTimer;
@@ -355,6 +355,8 @@ function haveTrillions(number) {
 function convertToNumber(string) {
   if(string.indexOf('M') > -1) {
     return Number(string.replace(/[^0-9\.]+/g, '')) * 1000000;
+  } else if(string.indexOf('B') > -1) {
+    return Number(string.replace(/[^0-9\.]+/g, '')) * 1000000000;
   } else {
     return Number(string.replace(/[^0-9\.]+/g, ''));
   }
