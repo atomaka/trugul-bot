@@ -101,7 +101,7 @@ function mainLoop() {
       clickSelector('button[name="buyx-knight"]');
       botPurchasingTimer = setInterval(function() {
         botFillIn('input[name="x_amount"]', SAFE_SOLDIER_COUNT);
-        clickButton("Buy");
+        clickButton("Yes");
       }, 250);
     }
 
