@@ -8,6 +8,7 @@ var botGlobalBossTimer;
 var botPurchasingTimer;
 var botPaused = true;
 var botPurchasing = false;
+var botDropping = false;
 var botSleeping = false;
 var botRaiding = false;
 var botFightingRandomBoss = false;
@@ -40,7 +41,14 @@ function mainLoop() {
         botLastRandom = botTimestamp();
         break;
       case 'Are you sure?':
-        clickButton('Activate Item');
+        if(botDropping) {
+          clickButton('Drop Item');
+          setTimeout(function() {
+            botDropping = false;
+          }, 2000);
+        } else {
+          clickButton('Activate Item');
+        }
         break;
       case 'ARE YOU SURE?':
       case 'CONFIRM PURCHASE':
@@ -181,8 +189,11 @@ function activateBuffs() {
         }
       }
     } else {
-      var itemButton = itemHolder.find('button:contains("Drop")');
-      itemButton.get(0).click()
+      if(!botDropping) {
+        var itemButton = itemHolder.find('button:contains("Drop")');
+        itemButton.get(0).click();
+        botDropping = true;
+      }
     }
   });
 }
