@@ -180,6 +180,9 @@ function activateBuffs() {
           itemButton.get(0).click()
         }
       }
+    } else {
+      var itemButton = itemHolder.find('button:contains("Drop")');
+      itemButton.get(0).click()
     }
   });
 }
