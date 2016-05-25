@@ -129,7 +129,7 @@ function mainLoop() {
     }
 
     //ACTIVATE BUFFS
-    if(inactiveBuffs()) {
+    if(inactiveBuffs() && !botDropping) {
       activateBuffs();
     }
 
@@ -189,11 +189,9 @@ function activateBuffs() {
         }
       }
     } else {
-      if(!botDropping) {
-        var itemButton = itemHolder.find('button:contains("Drop")');
-        itemButton.get(0).click();
-        botDropping = true;
-      }
+      var itemButton = itemHolder.find('button:contains("Drop")');
+      itemButton.get(0).click();
+      botDropping = true;
     }
   });
 }
