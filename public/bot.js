@@ -40,11 +40,8 @@ function mainLoop() {
         botLastRandom = botTimestamp();
         break;
       case 'Are you sure?':
-        if(botDropping) {
-          clickButton('Drop Item');
-        } else {
-          clickButton('Activate Item');
-        }
+        clickButton('Drop Item');
+        clickButton('Activate Item');
         break;
       case 'ARE YOU SURE?':
       case 'CONFIRM PURCHASE':
