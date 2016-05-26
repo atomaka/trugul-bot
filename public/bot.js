@@ -8,7 +8,6 @@ var botGlobalBossTimer;
 var botPurchasingTimer;
 var botPaused = true;
 var botPurchasing = false;
-var botDropping = false;
 var botSleeping = false;
 var botRaiding = false;
 var botFightingRandomBoss = false;
@@ -43,9 +42,6 @@ function mainLoop() {
       case 'Are you sure?':
         if(botDropping) {
           clickButton('Drop Item');
-          setTimeout(function() {
-            botDropping = false;
-          }, 2000);
         } else {
           clickButton('Activate Item');
         }
@@ -129,7 +125,7 @@ function mainLoop() {
     }
 
     //ACTIVATE BUFFS
-    if(inactiveBuffs() && !botDropping) {
+    if(inactiveBuffs()) {
       activateBuffs();
     }
 
@@ -191,7 +187,6 @@ function activateBuffs() {
     } else {
       var itemButton = itemHolder.find('button:contains("Drop")');
       itemButton.get(0).click();
-      botDropping = true;
     }
   });
 }
