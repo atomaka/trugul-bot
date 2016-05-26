@@ -353,6 +353,8 @@ function convertToNumber(string) {
     return Number(string.replace(/[^0-9\.]+/g, '')) * 1000000000;
   } else if(string.indexOf('T') > -1) {
     return Number(string.replace(/[^0-9\.]+/g, '')) * 1000000000000;
+  } else if(string.indexOf('Qa') > -1) {
+    return Number(string.replace(/[^0-9\.]+/g, '')) * 1000000000000000;
   } else {
     return Number(string.replace(/[^0-9\.]+/g, ''));
   }
