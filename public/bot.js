@@ -40,8 +40,11 @@ function mainLoop() {
         botLastRandom = botTimestamp();
         break;
       case 'Are you sure?':
-        clickButton('Drop Item');
-        clickButton('Activate Item');
+        if(checkPopupContent('drop')) {
+          clickButton('Drop Item');
+        } else {
+          clickButton('Activate Item');
+        }
         break;
       case 'ARE YOU SURE?':
       case 'CONFIRM PURCHASE':
@@ -413,6 +416,14 @@ function clickButton(text) {
 
 function clickSelector(selector) {
   $(selector).get(0).click();
+}
+
+function checkPopupContent(text) {
+  if($('#popup div[name="content"]:contains("' + text + '")').length > 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function botSetTarget(username) {
