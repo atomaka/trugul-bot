@@ -119,7 +119,9 @@ function mainLoop() {
       clearInterval(botGlobalBossTimer);
       botFightingGlobalBoss = false;
     } else if(globalBossRefreshing() === false && botFightingGlobalBoss === false && botFightGlobal === true) {
-      clickSelector('span[name="timeRemaining"]:contains("JOIN") a');
+      setTimeout(function() {
+        clickSelector('span[name="timeRemaining"]:contains("JOIN") a');
+      }, 4000);
       botGlobalBossTimer = setInterval(fightGlobalBoss, 250);
       botFightingGlobalBoss = true;
     }
