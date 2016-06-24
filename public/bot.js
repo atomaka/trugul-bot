@@ -122,7 +122,7 @@ function mainLoop() {
       setTimeout(function() {
         clickSelector('span[name="timeRemaining"]:contains("JOIN") a');
       }, 4000);
-      botGlobalBossTimer = setInterval(fightGlobalBoss, 250);
+      botGlobalBossTimer = setInterval(fightGlobalBoss, 100);
       botFightingGlobalBoss = true;
     }
 
